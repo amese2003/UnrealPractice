@@ -26,6 +26,9 @@ void AMyActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
+
+	// 카테고리, 로깅 수준, 형식, 인자
+	UE_LOG(LogTemp, Warning, TEXT("시작 함수 %d"), 3);
 }
 
 // Called every frame
@@ -33,5 +36,7 @@ void AMyActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	//UE_LOG(LogTemp, Error, TEXT("틱 %f"), DeltaTime);
+	AddActorLocalRotation(FRotator(0.f, RotateSpeed * DeltaTime, 0.f));
 }
 
