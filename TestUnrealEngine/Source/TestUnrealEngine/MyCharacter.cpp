@@ -82,21 +82,17 @@ void AMyCharacter::Attack()
 
 void AMyCharacter::UpDown(float value)
 {
-	if (value == 0.f)
-		return;
 
 	//UE_LOG(LogTemp, Warning, TEXT("UpDown %f"), value);
-
+	UpDownValue = value;
 	AddMovementInput(GetActorForwardVector(), value);
 }
 
 void AMyCharacter::LeftRight(float value)
 {
-	if (value == 0.f)
-		return;
 
 	//UE_LOG(LogTemp, Warning, TEXT("LeftRight %f"), value);
-
+	LeftRightValue = value;
 	AddMovementInput(GetActorRightVector(), value);
 }
 
