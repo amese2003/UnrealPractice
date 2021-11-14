@@ -62,4 +62,7 @@ public:
 
 	UPROPERTY()
 	int32 LeftRightValue = 0;
+
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* Weapon;
 };
