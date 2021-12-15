@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"D:\\Project\\UnrealPractice\\TopDown\\Source\\TopDown\\TopDown.Build.cs",
+		"D:\\Project\\UnrealPractice\\TopDown\\Source\\TopDown.Target.cs",
+		"D:\\Project\\UnrealPractice\\TopDown\\Source\\TopDownEditor.Target.cs"
+	],
+	"EngineVersion": "4.27.1"
+}
