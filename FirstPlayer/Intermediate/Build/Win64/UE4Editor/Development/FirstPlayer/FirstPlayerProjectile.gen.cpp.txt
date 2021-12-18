@@ -1,5 +1,0 @@
-D:\Project\UnrealPractice\FirstPlayer\Intermediate\Build\Win64\UE4Editor\Development\FirstPlayer\Definitions.FirstPlayer.h
-D:\Epic Games\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
-D:\Epic Games\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
-D:\Project\UnrealPractice\FirstPlayer\Source\FirstPlayer/FirstPlayerProjectile.h
-D:\Project\UnrealPractice\FirstPlayer\Intermediate\Build\Win64\UE4Editor\Inc\FirstPlayer\FirstPlayerProjectile.generated.h
