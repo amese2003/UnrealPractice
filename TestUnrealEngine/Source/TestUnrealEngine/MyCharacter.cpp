@@ -71,6 +71,37 @@ AMyCharacter::AMyCharacter()
 
 		Weapon->SetupAttachment(GetMesh(), WeaponSocket);
 	}*/
+
+	TArray<int32> arr;
+
+	arr.Add(1);
+	arr.Add(2);
+	arr.Add(3);
+
+	int32 size = arr.Num();
+	for (int32 i = 0; i < size; i++)
+	{
+		int32 temp = arr[i];
+	}
+
+	for (TArray<int32>::TIterator it = arr.CreateIterator(); it; it++)
+	{
+		int32 temp = *it;
+	}
+
+	for (int32 temp : arr)
+	{
+
+	}
+
+	arr.Empty(); // stl::vector empty();;
+
+	
+
+	// string <-> FString
+	// vector <-> Tarray
+	// unordered_map 단 default값이 없다!
+	TMap<int32, int32> map;
 }
 
 // Called when the game starts or when spawned
