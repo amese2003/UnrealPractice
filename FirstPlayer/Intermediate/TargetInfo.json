@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "FirstPlayer",
+			"Path": "D:\\Project\\UnrealPractice\\FirstPlayer\\Source\\FirstPlayer.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "FirstPlayerEditor",
+			"Path": "D:\\Project\\UnrealPractice\\FirstPlayer\\Source\\FirstPlayerEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

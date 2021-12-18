@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"D:\\Project\\UnrealPractice\\FirstPlayer\\Source\\FirstPlayer\\FirstPlayer.Build.cs",
+		"D:\\Project\\UnrealPractice\\FirstPlayer\\Source\\FirstPlayer.Target.cs",
+		"D:\\Project\\UnrealPractice\\FirstPlayer\\Source\\FirstPlayerEditor.Target.cs"
+	],
+	"EngineVersion": "4.27.1"
+}
