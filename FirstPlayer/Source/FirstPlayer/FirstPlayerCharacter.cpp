@@ -11,6 +11,9 @@
 #include "Kismet/GameplayStatics.h"
 #include "MotionControllerComponent.h"
 #include "XRMotionControllerBase.h" // for FXRMotionControllerBase::RightHandSourceId
+#include "FirstPlayerGameMode.h"
+#include "MyHUD.h"
+#include "Components/TextBlock.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
@@ -103,6 +106,8 @@ void AFirstPlayerCharacter::BeginPlay()
 		VR_Gun->SetHiddenInGame(true, true);
 		Mesh1P->SetHiddenInGame(false, true);
 	}
+
+	RefreshUI();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -140,6 +145,14 @@ void AFirstPlayerCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 
 void AFirstPlayerCharacter::OnFire()
 {
+	if (AmmoCount <= 0)
+		return;
+
+	AmmoCount--;
+
+	
+	RefreshUI();
+
 	// try and fire a projectile
 	if (ProjectileClass != nullptr)
 	{
@@ -297,4 +310,21 @@ bool AFirstPlayerCharacter::EnableTouchscreenMovement(class UInputComponent* Pla
 	}
 	
 	return false;
+}
+
+void AFirstPlayerCharacter::RefreshUI()
+{
+	AFirstPlayerGameMode* GameMode = Cast<AFirstPlayerGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+
+	if (GameMode)
+	{
+		UMyHUD* MyHUD = Cast<UMyHUD>(GameMode->CurrentWidget);
+
+		if (MyHUD)
+		{
+			const FString AmmoStr = FString::Printf(TEXT("Ammo %01d / %01d"), AmmoCount, MaxAmmoCount);
+			MyHUD->AmmoText->SetText(FText::FromString(AmmoStr));
+		}
+
+	}
 }

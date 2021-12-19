@@ -144,5 +144,11 @@ public:
 	/** Returns FirstPersonCameraComponent subobject **/
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
+
+	void RefreshUI();
+
+	int32 AmmoCount = 5;
+
+	int32 MaxAmmoCount = 5;
 };
 

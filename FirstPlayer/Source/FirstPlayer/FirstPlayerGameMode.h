@@ -13,6 +13,13 @@ class AFirstPlayerGameMode : public AGameModeBase
 
 public:
 	AFirstPlayerGameMode();
+
+public:
+	UPROPERTY()
+	TSubclassOf<UUserWidget> HUD_Class;
+
+	UPROPERTY()
+	UUserWidget* CurrentWidget;
 };
 
 
