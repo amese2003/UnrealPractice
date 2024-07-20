@@ -79,3 +79,5 @@ DerivedDataCache/*
 /Blaster/Binaries/Win64
 /Blaster/Build/Windows
 /Blaster/Intermediate
+/Blaster/Plugins/MultiplayerSessions/Binaries/Win64
+/Blaster/Plugins/MultiplayerSessions/Intermediate/Build/Win64
