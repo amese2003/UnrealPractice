@@ -75,3 +75,6 @@ DerivedDataCache/*
 /TestUnrealEngine/Binaries/Win64
 /TestUnrealEngine/Saved
 /TestUnrealEngine/Intermediate
+/Blaster/Saved
+/Blaster/Binaries/Win64
+/Blaster/Build/Windows
