@@ -38,6 +38,8 @@ protected:
 
 	void FireButtonPressed(bool bPressed);
 
+	void Fire();
+
 	UFUNCTION(Server, Reliable)
 	void ServerFire(const FVector_NetQuantize& TraceHitTarget);
 
@@ -48,6 +50,10 @@ protected:
 
 	void SetHUDCrosshairs(float DeltaTime);
 
+	void InterpFOV(float DeltaTime);
+
+	void StartFireTimer();
+	void FireTimerFinished();
 	
 
 private:
@@ -71,6 +77,8 @@ private:
 		
 	bool bFireButtonPressed = false;
 
+	
+
 
 	float CrosshairVelocityFactor;
 	float CrosshairInAirFactor;
@@ -91,6 +99,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = Combat)
 		float ZoomInterpSpeed = 20.f;
 
-	void InterpFOV(float DeltaTime);
 	
+
+	FTimerHandle FireTimer;
+	bool bCanFire = true;
 };
