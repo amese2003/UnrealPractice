@@ -300,10 +300,9 @@ void ABlasterCharacter::CalculateAO_Pitch()
 
 	if (AO_Pitch > 90.f && !IsLocallyControlled())
 	{
-		// map Pitch From [270, 360) to [-90 , 0)
+		// map pitch from [270, 360) to [-90, 0)
 		FVector2D InRange(270.f, 360.f);
 		FVector2D OutRange(-90.f, 0.f);
-
 		AO_Pitch = FMath::GetMappedRangeValueClamped(InRange, OutRange, AO_Pitch);
 	}
 }
