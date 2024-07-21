@@ -30,6 +30,10 @@ public:
 
 	virtual void OnRep_ReplicatedMovement() override;
 
+	UFUNCTION()
+		void ReceiveDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser);
+	void UpdateHUDHealth();
+
 protected:
 	virtual void BeginPlay() override;
 	/** Called for movement input */
@@ -139,6 +143,7 @@ private:
 	UFUNCTION()
 		void OnRep_Health();
 
+	class ABlasterPlayerController* BlasterPlayerController;
 
 
 	UPROPERTY(EditAnywhere, Category = Combat)

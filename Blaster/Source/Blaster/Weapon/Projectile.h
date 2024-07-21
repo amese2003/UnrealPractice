@@ -43,6 +43,10 @@ private:
 		class USoundCue* ImpactSound;
 
 	class UParticleSystemComponent* TracerComponent;
+
 	
+protected:
+	UPROPERTY(EditAnywhere)
+		float Damage = 20.f;
 
 };
