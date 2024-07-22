@@ -122,6 +122,8 @@ void ABlasterWeapon::ShowPickupWidget(bool bShowWidget)
 
 void ABlasterWeapon::Fire(const FVector& HitTarget)
 {
+	
+
 	if (FireAnimation)
 	{
 		WeaponMesh->PlayAnimation(FireAnimation, false);
@@ -134,6 +136,11 @@ void ABlasterWeapon::Fire(const FVector& HitTarget)
 		if (AmmoEjectSocket)
 		{
 			FTransform SocketTransform = AmmoEjectSocket->GetSocketTransform(WeaponMesh);
+
+			if (HasAuthority())
+			{
+				DrawDebugSphere(GetWorld(), SocketTransform.GetLocation(), 16.f, 12, FColor::Red, false);
+			}
 
 			UWorld* World = GetWorld();
 			if (World)
