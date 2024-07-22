@@ -131,8 +131,10 @@ void ABlasterCharacter::UpdateHUDHealth()
 	}
 }
 
-void ABlasterCharacter::Elim()
+void ABlasterCharacter::Elim_Implementation()
 {
+	bElimmed = true;
+	PlayElimMontage();
 }
 
 void ABlasterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -196,6 +198,11 @@ void ABlasterCharacter::PlayFireMontage(bool bAiming)
 
 void ABlasterCharacter::PlayElimMontage()
 {
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance && ElimMontage)
+	{
+		AnimInstance->Montage_Play(ElimMontage);
+	}
 }
 
 void ABlasterCharacter::MoveForward(const FInputActionValue& Value)

@@ -24,7 +24,7 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void PostInitializeComponents() override;
 	void PlayFireMontage(bool bAiming);
-	
+	void PlayElimMontage();
 
 	UFUNCTION(NetMulticast, Unreliable)
 		void MulticastHit();
@@ -153,6 +153,10 @@ private:
 	UPROPERTY(EditAnywhere, Category = Combat)
 		UAnimMontage* HitReactMontage;
 
+	UPROPERTY(EditAnywhere, Category = Combat)
+		UAnimMontage* ElimMontage;
+
+	bool bElimmed = false;
 
 public:
 	void SetOverlappingWeapon(ABlasterWeapon* Weapon);
@@ -166,4 +170,5 @@ public:
 	FVector GetHitTarget() const;
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 	FORCEINLINE bool ShouldRotateRootBone() const { return bRotateRootBone; }
+	FORCEINLINE bool IsElimmed() const { return bElimmed; }
 };
