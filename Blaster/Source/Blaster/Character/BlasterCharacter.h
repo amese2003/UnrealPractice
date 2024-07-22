@@ -35,8 +35,10 @@ public:
 		void ReceiveDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser);
 	void UpdateHUDHealth();
 
-	UFUNCTION(NetMulticast, Reliable)
 	void Elim();
+
+	UFUNCTION(NetMulticast, Reliable)
+		void MulticastElim();
 
 protected:
 	virtual void BeginPlay() override;
@@ -156,7 +158,13 @@ private:
 	UPROPERTY(EditAnywhere, Category = Combat)
 		UAnimMontage* ElimMontage;
 
+	UPROPERTY(EditDefaultsOnly)
+		float ElimDelay = 3.f;
+
+	FTimerHandle ElimTimer;
 	bool bElimmed = false;
+
+	void ElimTimerFinished();
 
 public:
 	void SetOverlappingWeapon(ABlasterWeapon* Weapon);
