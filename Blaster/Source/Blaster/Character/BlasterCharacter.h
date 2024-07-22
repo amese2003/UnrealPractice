@@ -24,6 +24,7 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void PostInitializeComponents() override;
 	void PlayFireMontage(bool bAiming);
+	
 
 	UFUNCTION(NetMulticast, Unreliable)
 		void MulticastHit();
@@ -33,6 +34,9 @@ public:
 	UFUNCTION()
 		void ReceiveDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser);
 	void UpdateHUDHealth();
+
+	UFUNCTION(NetMulticast, Reliable)
+	void Elim();
 
 protected:
 	virtual void BeginPlay() override;
@@ -148,6 +152,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Combat)
 		UAnimMontage* HitReactMontage;
+
 
 public:
 	void SetOverlappingWeapon(ABlasterWeapon* Weapon);
