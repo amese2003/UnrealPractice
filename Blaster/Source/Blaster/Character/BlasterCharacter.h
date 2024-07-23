@@ -199,7 +199,7 @@ private:
 	UPROPERTY(EditAnywhere)
 		class USoundCue* ElimBotSound;
 
-	class ABlasterPlayerState* BlasterPlayerState
+	class ABlasterPlayerState* BlasterPlayerState;
 
 public:
 	void SetOverlappingWeapon(ABlasterWeapon* Weapon);
