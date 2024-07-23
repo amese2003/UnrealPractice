@@ -24,6 +24,8 @@ public:
 	ABlasterWeapon();
 	virtual void Tick(float DeltaTime) override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	virtual void OnRep_Owner() override;
+	void SetHUDAmmo();
 	void ShowPickupWidget(bool bShowWidget);
 	virtual void Fire(const FVector& HitTarget);
 	void Dropped();
@@ -54,6 +56,8 @@ private:
 	UFUNCTION()
 		void OnRep_WeaponState();
 
+
+
 	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties")
 		class UWidgetComponent* PickupWidget;
 
@@ -69,7 +73,16 @@ private:
 	UPROPERTY(EditAnywhere)
 		float ZoomInterpSpeed = 20.f;
 
-	
+	UPROPERTY(EditAnywhere, ReplicatedUsing = OnRep_Ammo)
+		int32 Ammo = 0;
+
+	UFUNCTION()
+		void OnRep_Ammo();
+
+	void SpendRound();
+
+	UPROPERTY(EditAnywhere)
+		int32 MagCapacity = 0;
 
 
 public:
@@ -95,6 +108,12 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = Combat)
 		bool bAutomatic = true;
+
+	UPROPERTY()
+	class ABlasterCharacter* BlasterOwnerCharacter;
+
+	UPROPERTY()
+	class ABlasterPlayerController* BlasterOwnerController;
 
 public:
 	void SetWeaponState(EWeaponState State);

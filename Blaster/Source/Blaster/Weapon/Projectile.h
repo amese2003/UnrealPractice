@@ -42,6 +42,7 @@ private:
 	UPROPERTY(EditAnywhere)
 		class USoundCue* ImpactSound;
 
+	UPROPERTY()
 	class UParticleSystemComponent* TracerComponent;
 
 	

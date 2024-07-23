@@ -10,6 +10,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Casing.h"
 #include "Engine/SkeletalMeshSocket.h"
+#include "Blaster/PlayerController/BlasterPlayerController.h"
 
 // Sets default values
 ABlasterWeapon::ABlasterWeapon()
@@ -91,6 +92,18 @@ void ABlasterWeapon::OnRep_WeaponState()
 	}
 }
 
+void ABlasterWeapon::OnRep_Ammo()
+{
+	BlasterOwnerCharacter = BlasterOwnerCharacter == nullptr ? Cast<ABlasterCharacter>(GetOwner()) : BlasterOwnerCharacter;
+	SetHUDAmmo();
+}
+
+void ABlasterWeapon::SpendRound()
+{
+	--Ammo;
+	SetHUDAmmo();
+}
+
 void ABlasterWeapon::SetWeaponState(EWeaponState State)
 {
 	WeaponState = State;
@@ -127,6 +140,34 @@ void ABlasterWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ABlasterWeapon, WeaponState);
+	DOREPLIFETIME(ABlasterWeapon, Ammo);
+}
+
+void ABlasterWeapon::OnRep_Owner()
+{
+	Super::OnRep_Owner();
+	if (Owner == nullptr)
+	{
+		BlasterOwnerCharacter = nullptr;
+		BlasterOwnerController = nullptr;
+	}
+	else
+	{
+		SetHUDAmmo();
+	}
+}
+
+void ABlasterWeapon::SetHUDAmmo()
+{
+	BlasterOwnerCharacter = BlasterOwnerCharacter == nullptr ? Cast<ABlasterCharacter>(GetOwner()) : BlasterOwnerCharacter;
+	if (BlasterOwnerCharacter)
+	{
+		BlasterOwnerController = BlasterOwnerController == nullptr ? Cast<ABlasterPlayerController>(BlasterOwnerCharacter->Controller) : BlasterOwnerController;
+		if (BlasterOwnerController)
+		{
+			BlasterOwnerController->SetHUDWeaponAmmo(Ammo);
+		}
+	}
 }
 
 void ABlasterWeapon::ShowPickupWidget(bool bShowWidget)
@@ -139,8 +180,6 @@ void ABlasterWeapon::ShowPickupWidget(bool bShowWidget)
 
 void ABlasterWeapon::Fire(const FVector& HitTarget)
 {
-	
-
 	if (FireAnimation)
 	{
 		WeaponMesh->PlayAnimation(FireAnimation, false);
@@ -171,6 +210,8 @@ void ABlasterWeapon::Fire(const FVector& HitTarget)
 			}
 		}
 	}
+
+	SpendRound();
 }
 
 void ABlasterWeapon::Dropped()
@@ -180,5 +221,7 @@ void ABlasterWeapon::Dropped()
 
 	WeaponMesh->DetachFromComponent(DetachRules);
 	SetOwner(nullptr);
+	BlasterOwnerCharacter = nullptr;
+	BlasterOwnerController = nullptr;
 }
 
