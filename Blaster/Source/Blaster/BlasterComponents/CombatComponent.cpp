@@ -262,6 +262,8 @@ void UCombatComponent::Fire()
 	}
 }
 
+
+
 void UCombatComponent::TraceUnderCrosshairs(FHitResult& TraceHitResult)
 {
 	FVector2D ViewportSize;
@@ -337,7 +339,13 @@ void UCombatComponent::MulticastFire_Implementation(const FVector_NetQuantize& T
 	}
 }
 
+void UCombatComponent::ServerReload_Implementation()
+{
+	if (Character == nullptr)
+		return;
 
+	Character->PlayReloadMontage();
+}
 
 
 
@@ -380,4 +388,12 @@ void UCombatComponent::EquipWeapon(ABlasterWeapon* WeaponToEquip)
 
 	Character->GetCharacterMovement()->bOrientRotationToMovement = false;
 	Character->bUseControllerRotationYaw = true;
+}
+
+void UCombatComponent::Reload()
+{
+	if (CarriedAmmo > 0)
+	{
+		ServerReload();
+	}
 }

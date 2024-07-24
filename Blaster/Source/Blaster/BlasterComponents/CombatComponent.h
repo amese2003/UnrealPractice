@@ -27,6 +27,8 @@ public:
 	friend class ABlasterCharacter;
 
 	void EquipWeapon(class ABlasterWeapon* WeaponToEquip);
+	void Reload();
+
 protected:
 	virtual void BeginPlay() override;
 	void SetAiming(bool bIsAiming);
@@ -43,6 +45,9 @@ protected:
 
 	UFUNCTION(Server, Reliable)
 		void ServerFire(const FVector_NetQuantize& TraceHitTarget);
+
+	UFUNCTION(Server, Reliable)
+		void ServerReload();
 
 	UFUNCTION(NetMulticast, Reliable)
 		void MulticastFire(const FVector_NetQuantize& TraceHitTarget);
@@ -70,6 +75,8 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	int32 StartingARAmmo = 60;
+
+	
 
 private:
 	UPROPERTY()
