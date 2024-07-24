@@ -57,6 +57,7 @@ protected:
 		void MulticastFire(const FVector_NetQuantize& TraceHitTarget);
 
 	void HandleReload();
+	int32 AmountToReload();
 
 	void TraceUnderCrosshairs(FHitResult& TraceHitResult);
 
@@ -87,6 +88,8 @@ protected:
 
 	UFUNCTION()
 		void OnRep_CombatState();
+
+	void UpdateAmmoValues();
 
 	
 
