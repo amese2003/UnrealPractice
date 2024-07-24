@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "Blaster/HUD/BlasterHUD.h"
 #include "Blaster/Weapon/WeaponType.h"
+#include "Blaster/BlasterTypes/CombatState.h"
 #include "CombatComponent.generated.h"
 
 
@@ -28,6 +29,9 @@ public:
 
 	void EquipWeapon(class ABlasterWeapon* WeaponToEquip);
 	void Reload();
+
+	UFUNCTION(BlueprintCallable)
+		void FinishReloading();
 
 protected:
 	virtual void BeginPlay() override;
@@ -52,6 +56,8 @@ protected:
 	UFUNCTION(NetMulticast, Reliable)
 		void MulticastFire(const FVector_NetQuantize& TraceHitTarget);
 
+	void HandleReload();
+
 	void TraceUnderCrosshairs(FHitResult& TraceHitResult);
 
 	void SetHUDCrosshairs(float DeltaTime);
@@ -75,6 +81,12 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	int32 StartingARAmmo = 60;
+
+	UPROPERTY(ReplicatedUsing = OnRep_CombatState)
+		ECombatState CombatState = ECombatState::ECS_Unoccupied;
+
+	UFUNCTION()
+		void OnRep_CombatState();
 
 	
 
