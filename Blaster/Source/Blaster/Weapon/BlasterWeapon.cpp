@@ -100,8 +100,13 @@ void ABlasterWeapon::OnRep_Ammo()
 
 void ABlasterWeapon::SpendRound()
 {
-	--Ammo;
+	Ammo = FMath::Clamp(Ammo - 1, 0, MagCapacity);
 	SetHUDAmmo();
+}
+
+bool ABlasterWeapon::IsEmpty()
+{
+	return Ammo <= 0;
 }
 
 void ABlasterWeapon::SetWeaponState(EWeaponState State)

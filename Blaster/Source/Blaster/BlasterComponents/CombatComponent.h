@@ -55,6 +55,7 @@ protected:
 	void StartFireTimer();
 	void FireTimerFinished();
 	
+	bool CanFire();
 
 private:
 	UPROPERTY()

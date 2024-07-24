@@ -84,6 +84,8 @@ private:
 	UPROPERTY(EditAnywhere)
 		int32 MagCapacity = 0;
 
+	
+
 
 public:
 	UPROPERTY(EditAnywhere, Category = Crosshairs)
@@ -114,6 +116,8 @@ public:
 
 	UPROPERTY()
 	class ABlasterPlayerController* BlasterOwnerController;
+
+	bool IsEmpty();
 
 public:
 	void SetWeaponState(EWeaponState State);
