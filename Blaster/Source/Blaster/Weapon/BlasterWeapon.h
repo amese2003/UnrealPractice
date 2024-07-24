@@ -123,6 +123,9 @@ public:
 
 	bool IsEmpty();
 
+	UPROPERTY(EditAnywhere)
+		class USoundCue* EquipSound;
+
 public:
 	void SetWeaponState(EWeaponState State);
 	FORCEINLINE USphereComponent* GetAreaSphere() const { return AreaSphere; }

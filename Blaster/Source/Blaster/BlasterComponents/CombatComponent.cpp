@@ -12,6 +12,7 @@
 #include "TimerManager.h"
 #include "Camera/CameraComponent.h"
 #include "Blaster/Interfaces/InteractWithCrosshairsInterface.h"
+#include "Sound/SoundCue.h"
 
 UCombatComponent::UCombatComponent()
 {
@@ -441,6 +442,15 @@ void UCombatComponent::EquipWeapon(ABlasterWeapon* WeaponToEquip)
 	if (Controller)
 	{
 		Controller->SetHUDCarriedAmmo(CarriedAmmo);
+	}
+
+	if (EquippedWeapon->EquipSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(
+			this,
+			EquippedWeapon->EquipSound,
+			Character->GetActorLocation()
+		);
 	}
 
 	Character->GetCharacterMovement()->bOrientRotationToMovement = false;
