@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "WeaponType.h"
 #include "BlasterWeapon.generated.h"
 
 UENUM(BlueprintType)
@@ -84,6 +85,8 @@ private:
 	UPROPERTY(EditAnywhere)
 		int32 MagCapacity = 0;
 
+	UPROPERTY(EditAnywhere)
+	EWeaponType WeaponType;
 	
 
 
@@ -125,4 +128,5 @@ public:
 	FORCEINLINE USkeletalMeshComponent* GetWeaponMesh() const { return WeaponMesh; }
 	FORCEINLINE float GetZoomedFOV() const { return ZoomedFOV; }
 	FORCEINLINE float GetZoomInterpSpeed() const { return ZoomInterpSpeed; }
+	FORCEINLINE EWeaponType GetWeaponType() const { return WeaponType; }
 };

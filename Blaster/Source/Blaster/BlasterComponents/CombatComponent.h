@@ -66,6 +66,11 @@ protected:
 
 	TMap<EWeaponType, int32> CarriedAmmoMap;
 
+	void InitializeCarriedAmmo();
+
+	UPROPERTY(EditAnywhere)
+	int32 StartingARAmmo = 60;
+
 private:
 	UPROPERTY()
 	class ABlasterCharacter* Character;
