@@ -15,6 +15,8 @@ class BLASTER_API ABlasterPlayerController : public APlayerController
 	GENERATED_BODY()
 
 public:
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
 	void SetHUDHealth(float Health, float MaxHealth);
 	void SetHUDScore(float Score);
 	void SetHUDDefeats(int32 Defeats);
@@ -22,7 +24,11 @@ public:
 	void SetHUDCarriedAmmo(int32 Ammo);
 	void SetHUDMatchCountdown(float CountdownTime);
 	virtual void OnPossess(APawn* InPawn) override;
+
+	void OnMatchStateSet(FName State);
 	
+
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
@@ -32,6 +38,7 @@ protected:
 	virtual void ReceivedPlayer() override;
 
 	void SetHUDTime();
+	void PollInit();
 
 private:
 	UPROPERTY()
@@ -55,4 +62,19 @@ private:
 
 	float TimeSyncRunningTime = 0.f;
 	void CheckTimeSync(float DeltaTime);
+
+	UPROPERTY(ReplicatedUsing = OnRep_MatchState)
+		FName MatchState;
+
+	UFUNCTION()
+		void OnRep_MatchState();
+
+	UPROPERTY()
+		class UCharacterOverlay* CharacterOverlay;
+	bool bInitializeCharacterOverlay = false;
+
+	float HUDHealth = 0;
+	float HUDMaxHealth = 0;
+	float HUDScore = 0;
+	int32 HUDDefeats = 0;
 };
