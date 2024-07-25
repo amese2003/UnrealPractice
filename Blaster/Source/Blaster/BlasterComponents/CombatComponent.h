@@ -29,9 +29,11 @@ public:
 
 	void EquipWeapon(class ABlasterWeapon* WeaponToEquip);
 	void Reload();
+	void FireButtonPressed(bool bPressed);
 
 	UFUNCTION(BlueprintCallable)
 		void FinishReloading();
+
 
 protected:
 	virtual void BeginPlay() override;
@@ -43,7 +45,7 @@ protected:
 	UFUNCTION()
 		void OnRep_EquippedWeapon();
 
-	void FireButtonPressed(bool bPressed);
+	
 
 	void Fire();
 
