@@ -53,6 +53,13 @@ public:
 	UPROPERTY()
 	class UCharacterOverlay* CharacterOverlay;
 
+	UPROPERTY(EditAnywhere, Category = "Announcements")
+		TSubclassOf<UUserWidget> AnnouncementClass;
+
+	UPROPERTY()
+		class UAnnouncement* Announcement;
+
+	void AddAnnouncement();
 
 public:
 	FORCEINLINE void SetHUDPackage(const FHUDPackage& Package) { HUDPackage = Package; }

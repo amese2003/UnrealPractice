@@ -26,8 +26,7 @@ public:
 	virtual void OnPossess(APawn* InPawn) override;
 
 	void OnMatchStateSet(FName State);
-	
-
+	void HandleMatchHasStarted();
 
 protected:
 	virtual void BeginPlay() override;
