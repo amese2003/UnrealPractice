@@ -28,6 +28,7 @@ public:
 
 	void OnMatchStateSet(FName State);
 	void HandleMatchHasStarted();
+	void HandleCooldown();
 
 	UFUNCTION(Server, Reliable)
 		void ServerCheckMatchState();
