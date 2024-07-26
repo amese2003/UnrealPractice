@@ -85,6 +85,9 @@ protected:
 	UPROPERTY(EditAnywhere)
 	int32 StartingARAmmo = 60;
 
+	UPROPERTY(EditAnywhere)
+		int32 StartingRocketAmmo = 3;
+
 	UPROPERTY(ReplicatedUsing = OnRep_CombatState)
 		ECombatState CombatState = ECombatState::ECS_Unoccupied;
 
