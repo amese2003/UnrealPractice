@@ -23,24 +23,15 @@ protected:
 	UFUNCTION()
 		virtual void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpluse, const FHitResult& Hit);
 
+	
+
 private:
-
-	UPROPERTY(EditAnywhere)
-		class UBoxComponent* CollisionBox;
-
 
 	UPROPERTY(VisibleAnywhere)
 	class UProjectileMovementComponent* ProjectileMovementComponent;
 
-
 	UPROPERTY(EditAnywhere)
 		class UParticleSystem* Tracer;
-
-	UPROPERTY(EditAnywhere)
-	UParticleSystem* ImpactParticles;
-
-	UPROPERTY(EditAnywhere)
-		class USoundCue* ImpactSound;
 
 	UPROPERTY()
 	class UParticleSystemComponent* TracerComponent;
@@ -50,4 +41,12 @@ protected:
 	UPROPERTY(EditAnywhere)
 		float Damage = 20.f;
 
+	UPROPERTY(EditAnywhere)
+		UParticleSystem* ImpactParticles;
+
+	UPROPERTY(EditAnywhere)
+		class USoundCue* ImpactSound;
+
+	UPROPERTY(EditAnywhere)
+		class UBoxComponent* CollisionBox;
 };
