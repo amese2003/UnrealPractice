@@ -83,10 +83,14 @@ protected:
 	void InitializeCarriedAmmo();
 
 	UPROPERTY(EditAnywhere)
-	int32 StartingARAmmo = 60;
+	int32 StartingARAmmo = 30;
 
 	UPROPERTY(EditAnywhere)
-		int32 StartingRocketAmmo = 3;
+		int32 StartingRocketAmmo = 1;
+
+	UPROPERTY(EditAnywhere)
+		int32 StartingPistolAmmo = 0;
+
 
 	UPROPERTY(ReplicatedUsing = OnRep_CombatState)
 		ECombatState CombatState = ECombatState::ECS_Unoccupied;
