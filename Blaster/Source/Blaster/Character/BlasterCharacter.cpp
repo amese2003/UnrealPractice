@@ -303,6 +303,7 @@ void ABlasterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Completed, this, &ThisClass::FireButtonReleased);
 
 		EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Started, this, &ThisClass::ReloadButtonPressed);
+		EnhancedInputComponent->BindAction(ThrowAction, ETriggerEvent::Started, this, &ThisClass::ThrowButtonPressed);
 	}
 }
 
@@ -500,6 +501,10 @@ void ABlasterCharacter::ReloadButtonPressed(const FInputActionValue& Value)
 
 void ABlasterCharacter::ThrowButtonPressed(const FInputActionValue& Value)
 {
+	if (Combat)
+	{
+		Combat->ThrowGrenade();
+	}
 }
 
 void ABlasterCharacter::AimOffset(float DeltaTime)
