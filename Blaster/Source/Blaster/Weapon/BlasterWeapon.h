@@ -32,6 +32,7 @@ public:
 	void Dropped();
 	void AddAmmo(int32 AmmoToAdd);
 
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -122,6 +123,7 @@ public:
 	class ABlasterPlayerController* BlasterOwnerController;
 
 	bool IsEmpty();
+	bool IsFull();
 
 	UPROPERTY(EditAnywhere)
 		class USoundCue* EquipSound;
