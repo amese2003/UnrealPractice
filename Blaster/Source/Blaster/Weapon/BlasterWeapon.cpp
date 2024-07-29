@@ -59,7 +59,6 @@ void ABlasterWeapon::BeginPlay()
 	
 }
 
-PRAGMA_DISABLE_OPTIMIZATION
 void ABlasterWeapon::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	ABlasterCharacter* BlasterCharacter = Cast<ABlasterCharacter>(OtherActor);
@@ -68,7 +67,7 @@ void ABlasterWeapon::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, A
 		BlasterCharacter->SetOverlappingWeapon(this);
 	}
 }
-PRAGMA_ENABLE_OPTIMIZATION
+
 
 void ABlasterWeapon::OnSphereEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {

@@ -384,6 +384,15 @@ void ABlasterCharacter::PlayReloadMontage()
 	}
 }
 
+void ABlasterCharacter::PlayThrowGrenadeMontage()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	if (AnimInstance && ThrowGrenadeMontage)
+	{
+		AnimInstance->Montage_Play(ThrowGrenadeMontage);
+	}
+}
+
 void ABlasterCharacter::MoveForward(const FInputActionValue& Value)
 {
 	if (bDisableGameplay) return;
@@ -487,6 +496,10 @@ void ABlasterCharacter::ReloadButtonPressed(const FInputActionValue& Value)
 	{
 		Combat->Reload();
 	}
+}
+
+void ABlasterCharacter::ThrowButtonPressed(const FInputActionValue& Value)
+{
 }
 
 void ABlasterCharacter::AimOffset(float DeltaTime)

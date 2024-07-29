@@ -9,9 +9,6 @@
 #include "Blaster/BlasterTypes/CombatState.h"
 #include "CombatComponent.generated.h"
 
-
-#define TRACE_LENGTH 80000
-
 class ABlasterWeapon;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -39,6 +36,8 @@ public:
 
 	void JumpToShotgunEnd();
 
+	UFUNCTION(BlueprintCallable)
+		void ThrowGrenadeFinished();
 
 protected:
 	virtual void BeginPlay() override;
@@ -117,6 +116,10 @@ protected:
 	void UpdateAmmoValues();
 	void UpdateShotgunAmmoValues();
 	
+	void ThrowGrenade();
+
+	UFUNCTION(Server, Reliable)
+		void ServerThrowGrenade();
 
 private:
 	UPROPERTY()

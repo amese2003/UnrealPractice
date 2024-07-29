@@ -28,6 +28,7 @@ public:
 	void PlayFireMontage(bool bAiming);
 	void PlayElimMontage();
 	void PlayReloadMontage();
+	void PlayThrowGrenadeMontage();
 
 	UFUNCTION(NetMulticast, Unreliable)
 		void MulticastHit();
@@ -66,6 +67,7 @@ protected:
 	void AimButtonPressed(const FInputActionValue& Value);
 	void AimButtonReleased(const FInputActionValue& Value);
 	void ReloadButtonPressed(const FInputActionValue& Value);
+	void ThrowButtonPressed(const FInputActionValue& Value);
 	void AimOffset(float DeltaTime);
 	void CalculateAO_Pitch();
 	void SimProxiesTurn();
@@ -116,6 +118,9 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		UInputAction* ReloadAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		UInputAction* ThrowAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		class UWidgetComponent* OverheadWidget;
@@ -177,6 +182,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Combat)
 		UAnimMontage* ReloadMontage;
+
+	UPROPERTY(EditAnywhere, Category = Combat)
+		UAnimMontage* ThrowGrenadeMontage;
 
 	UPROPERTY(EditDefaultsOnly)
 		float ElimDelay = 3.f;
