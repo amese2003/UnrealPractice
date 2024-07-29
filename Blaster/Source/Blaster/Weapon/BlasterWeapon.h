@@ -91,7 +91,7 @@ private:
 	EWeaponType WeaponType;
 	
 
-
+	void EnableCustomDepth(bool bEnable);
 public:
 	UPROPERTY(EditAnywhere, Category = Crosshairs)
 		class UTexture2D* CrosshairsCenter;
