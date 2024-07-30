@@ -116,8 +116,14 @@ protected:
 	UPROPERTY(ReplicatedUsing = OnRep_CombatState)
 		ECombatState CombatState = ECombatState::ECS_Unoccupied;
 
+	UPROPERTY(ReplicatedUsing = OnRep_Grenades)
+		int32 Grenades = 4;
+
 	UFUNCTION()
 		void OnRep_CombatState();
+
+	UFUNCTION()
+		void OnRep_Grenades();
 
 	void UpdateAmmoValues();
 	void UpdateShotgunAmmoValues();
@@ -130,6 +136,11 @@ protected:
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<class AProjectile> GrenadeClass;
 
+	UPROPERTY(EditAnywhere)
+		int32 MaxGrenades = 4;
+
+	void UpdateHUDGrenades();
+
 	void DropEquippedWeapon();
 	void AttachActorToRightHand(AActor* ActorToAttach);
 	void AttachActorToLeftHand(AActor* ActorToAttach);
@@ -137,6 +148,8 @@ protected:
 	void PlayEquipWeaponSound();
 	void ReloadEmptyWeapon();
 	void ShowAttachedGrenade(bool bShowGrenade);
+
+	
 
 private:
 	UPROPERTY()
@@ -190,4 +203,7 @@ private:
 
 	FTimerHandle FireTimer;
 	bool bCanFire = true;
+
+public:
+	FORCEINLINE int32 GetGrenades() const { return Grenades; }
 };
