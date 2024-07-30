@@ -49,6 +49,9 @@ protected:
 	UFUNCTION(Server, Reliable)
 		void ServerSetAiming(bool bIsAiming);
 
+	UFUNCTION(Server, Reliable)
+		void ServerLaunchGrenade(const FVector_NetQuantize& Target);
+
 	UFUNCTION()
 		void OnRep_EquippedWeapon();
 
