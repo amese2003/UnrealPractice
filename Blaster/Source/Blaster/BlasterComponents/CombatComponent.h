@@ -42,6 +42,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void LaunchGrenade();
 
+	void PickupAmmo(EWeaponType WeaponType, int32 AmmoAmount);
+
 protected:
 	virtual void BeginPlay() override;
 	void SetAiming(bool bIsAiming);
@@ -56,7 +58,7 @@ protected:
 		void OnRep_EquippedWeapon();
 
 	
-
+	
 	void Fire();
 
 	UFUNCTION(Server, Reliable)
@@ -112,6 +114,9 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 		int32 StartingGrenadeLauncherAmmo = 0;
+
+	UPROPERTY(EditAnywhere)
+		int32 MaxCarriedAmmo = 500;
 
 	UPROPERTY(ReplicatedUsing = OnRep_CombatState)
 		ECombatState CombatState = ECombatState::ECS_Unoccupied;
