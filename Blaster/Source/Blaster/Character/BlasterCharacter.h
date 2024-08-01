@@ -39,7 +39,9 @@ public:
 		void ReceiveDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, class AController* InstigatorController, AActor* DamageCauser);
 	void UpdateHUDHealth();
 	void UpdateHUDShield();
+	void UpdateHUDAmmo();
 
+	void SpawnDefaultWeapon();
 	void Elim();
 
 	void PollInit();
@@ -243,6 +245,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 		UStaticMeshComponent* AttachedGrenade;
+
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<ABlasterWeapon> DefaultWeaponClass;
 
 public:
 	void SetOverlappingWeapon(ABlasterWeapon* Weapon);

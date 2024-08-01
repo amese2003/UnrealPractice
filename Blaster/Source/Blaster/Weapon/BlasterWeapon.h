@@ -92,6 +92,8 @@ private:
 	
 
 	void EnableCustomDepth(bool bEnable);
+
+	
 public:
 	UPROPERTY(EditAnywhere, Category = Crosshairs)
 		class UTexture2D* CrosshairsCenter;
@@ -128,6 +130,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		class USoundCue* EquipSound;
 
+	bool bDestroyWeapon = false;
 public:
 	void SetWeaponState(EWeaponState State);
 	FORCEINLINE USphereComponent* GetAreaSphere() const { return AreaSphere; }
