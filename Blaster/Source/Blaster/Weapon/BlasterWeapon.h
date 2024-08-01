@@ -91,7 +91,6 @@ private:
 	EWeaponType WeaponType;
 	
 
-	void EnableCustomDepth(bool bEnable);
 
 	
 public:
@@ -131,6 +130,9 @@ public:
 		class USoundCue* EquipSound;
 
 	bool bDestroyWeapon = false;
+
+
+	void EnableCustomDepth(bool bEnable);
 public:
 	void SetWeaponState(EWeaponState State);
 	FORCEINLINE USphereComponent* GetAreaSphere() const { return AreaSphere; }
