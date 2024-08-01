@@ -18,6 +18,7 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	void SetHUDHealth(float Health, float MaxHealth);
+	void SetHUDShield(float Shield, float MaxShield);
 	void SetHUDScore(float Score);
 	void SetHUDDefeats(int32 Defeats);
 	void SetHUDWeaponAmmo(int32 Ammo);
@@ -91,5 +92,6 @@ private:
 	float HUDScore = 0;
 	int32 HUDDefeats = 0;
 	int32 HUDGrenades = 0;
-
+	float HUDShield = 0;
+	float HUDMaxShield = 0;
 };
