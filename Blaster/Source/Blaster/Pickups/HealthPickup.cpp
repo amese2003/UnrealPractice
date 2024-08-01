@@ -8,8 +8,6 @@
 AHealthPickup::AHealthPickup()
 {
 	bReplicates = true;
-	PickupEffectComponent = CreateDefaultSubobject<UNiagaraComponent>(TEXT("PickupEffectComponent"));
-	PickupEffectComponent->SetupAttachment(RootComponent);
 
 }
 
@@ -28,19 +26,4 @@ void AHealthPickup::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, AA
 	}
 
 	Destroy();
-}
-
-void AHealthPickup::Destroyed()
-{
-
-	if (PickupEffect)
-	{
-		UNiagaraFunctionLibrary::SpawnSystemAtLocation(
-			this,
-			PickupEffect,
-			GetActorLocation(),
-			GetActorRotation()
-		);
-	}
-	Super::Destroyed();
 }
