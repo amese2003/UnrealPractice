@@ -157,7 +157,7 @@ protected:
 	void ShowAttachedGrenade(bool bShowGrenade);
 	void EquipPrimaryWeapon(ABlasterWeapon* WeaponToEquip);
 	void EquipSecondaryWeapon(ABlasterWeapon* WeaponToEquip);
-	
+	void SwapWeapons();
 
 private:
 	UPROPERTY()
@@ -217,4 +217,5 @@ private:
 
 public:
 	FORCEINLINE int32 GetGrenades() const { return Grenades; }
+	bool ShouldSwapWeapons();
 };

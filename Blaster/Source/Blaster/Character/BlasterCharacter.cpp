@@ -727,9 +727,13 @@ void ABlasterCharacter::PlayHitReactMontage()
 
 void ABlasterCharacter::ServerEquipButtonPressed_Implementation()
 {
-	if (Combat && OverlappingWeapon)
+	if (OverlappingWeapon)
 	{
 		Combat->EquipWeapon(OverlappingWeapon);
+	}
+	else if (Combat->ShouldSwapWeapons())
+	{
+		Combat->SwapWeapons();
 	}
 }
 

@@ -439,7 +439,6 @@ void UCombatComponent::EquipPrimaryWeapon(ABlasterWeapon* WeaponToEquip)
 	UpdateCarriedAmmo();
 	PlayEquipWeaponSound(WeaponToEquip);
 	ReloadEmptyWeapon();
-	EquippedWeapon->EnableCustomDepth(false);
 }
 
 void UCombatComponent::EquipSecondaryWeapon(ABlasterWeapon* WeaponToEquip)
@@ -448,7 +447,7 @@ void UCombatComponent::EquipSecondaryWeapon(ABlasterWeapon* WeaponToEquip)
 		return;
 
 	SecondaryWeapon = WeaponToEquip;
-	SecondaryWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
+	SecondaryWeapon->SetWeaponState(EWeaponState::EWS_EquippedSecondary);
 	AttachActorToBackpack(WeaponToEquip);
 	PlayEquipWeaponSound(WeaponToEquip);
 
@@ -462,6 +461,27 @@ void UCombatComponent::EquipSecondaryWeapon(ABlasterWeapon* WeaponToEquip)
 		return;
 
 	EquippedWeapon->SetOwner(Character);
+}
+
+void UCombatComponent::SwapWeapons()
+{
+	ABlasterWeapon* TempWeapon = EquippedWeapon;
+	EquippedWeapon = SecondaryWeapon;
+	SecondaryWeapon = TempWeapon;
+
+	EquippedWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
+	AttachActorToRightHand(EquippedWeapon);
+	EquippedWeapon->SetHUDAmmo();
+	UpdateCarriedAmmo();
+	PlayEquipWeaponSound(EquippedWeapon);
+
+	SecondaryWeapon->SetWeaponState(EWeaponState::EWS_EquippedSecondary);
+	AttachActorToBackpack(SecondaryWeapon);
+}
+
+bool UCombatComponent::ShouldSwapWeapons()
+{
+	return (EquippedWeapon != nullptr && SecondaryWeapon != nullptr);
 }
 
 void UCombatComponent::ServerThrowGrenade_Implementation()
@@ -541,6 +561,7 @@ void UCombatComponent::OnRep_EquippedWeapon()
 		Character->bUseControllerRotationYaw = true;
 		PlayEquipWeaponSound(EquippedWeapon);
 		EquippedWeapon->EnableCustomDepth(false);
+		EquippedWeapon->SetHUDAmmo();
 	}
 }
 
@@ -548,7 +569,7 @@ void UCombatComponent::OnRep_SecondaryWeapon()
 {
 	if (SecondaryWeapon && Character)
 	{
-		SecondaryWeapon->SetWeaponState(EWeaponState::EWS_Equipped);
+		SecondaryWeapon->SetWeaponState(EWeaponState::EWS_EquippedSecondary);
 		AttachActorToBackpack(SecondaryWeapon);
 		PlayEquipWeaponSound(EquippedWeapon);
 		if (SecondaryWeapon->GetWeaponMesh())
