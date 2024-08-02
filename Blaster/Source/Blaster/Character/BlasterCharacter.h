@@ -58,6 +58,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 		void ShowSniperScopeWidget(bool bShowScope);
 
+	void DropOrDestroyWeapon(ABlasterWeapon* Weapon);
+	void DropOrDestroyWeapons();
+
 protected:
 	virtual void BeginPlay() override;
 	/** Called for movement input */
@@ -78,6 +81,7 @@ protected:
 	void FireButtonPressed();
 	void FireButtonReleased();
 	void PlayHitReactMontage();
+	
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = Camera)
