@@ -32,6 +32,10 @@ public:
 	void HandleMatchHasStarted();
 	void HandleCooldown();
 
+	void HighPingWarning();
+	void StopHighPingWarning();
+	void CheckPing(float DeltaTime);
+
 	UFUNCTION(Server, Reliable)
 		void ServerCheckMatchState();
 
@@ -103,4 +107,17 @@ private:
 	bool bInitializeShield = false;
 	bool bInitializeCarriedAmmo = false;
 	bool bInitializeWeaponAmmo = false;
+
+	float HighPingRunningTime = 0.f;
+
+	UPROPERTY(EditAnywhere)
+		float HighPingDuration = 5.f;
+
+	float PingAnimationRunningTime = 0.f;
+
+	UPROPERTY(EditAnywhere)
+		float CheckPingFrequency = 20.f;
+
+	UPROPERTY(EditAnywhere)
+		float HighPingThreshold = 50.f;
 };
