@@ -96,11 +96,14 @@ private:
 	UPROPERTY(EditAnywhere)
 		float ZoomInterpSpeed = 20.f;
 
-	UPROPERTY(EditAnywhere, ReplicatedUsing = OnRep_Ammo)
-		int32 Ammo = 0;
+	UPROPERTY(EditAnywhere)
+		int32 Ammo;
 
-	UFUNCTION()
-		void OnRep_Ammo();
+	UFUNCTION(Client, Reliable)
+		void ClientUpdateAmmo(int32 ServerAmmo);
+
+	UFUNCTION(Client, Reliable)
+		void ClientAddAmmo(int32 AmmoToAdd);
 
 	void SpendRound();
 
@@ -112,7 +115,8 @@ private:
 	
 	
 
-	
+	int32 Sequence = 0;
+
 public:
 	UPROPERTY(EditAnywhere, Category = Crosshairs)
 		class UTexture2D* CrosshairsCenter;
