@@ -234,4 +234,6 @@ private:
 public:
 	FORCEINLINE int32 GetGrenades() const { return Grenades; }
 	bool ShouldSwapWeapons();
+
+	bool bLocallyReloading = false;
 };

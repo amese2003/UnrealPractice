@@ -191,6 +191,18 @@ bool UCombatComponent::CanFire()
 	if (EquippedWeapon == nullptr)
 		return false;
 
+	if (bLocallyReloading)
+	{
+		// allow shutgun shot at reloading
+		if(!EquippedWeapon->IsEmpty() && bCanFire && CombatState == ECombatState::ECS_Reloading && EquippedWeapon->GetWeaponType() == EWeaponType::EWT_Shotgun)
+		{
+			bLocallyReloading = false;
+			return true;
+		}
+
+		return false;
+	}
+
 	return !EquippedWeapon->IsEmpty() && bCanFire && CombatState == ECombatState::ECS_Unoccupied;
 }
 
@@ -220,7 +232,8 @@ void UCombatComponent::OnRep_CombatState()
 	switch (CombatState)
 	{
 	case ECombatState::ECS_Reloading:
-		HandleReload();
+		if (Character && !Character->IsLocallyControlled()) 
+			HandleReload();
 		break;
 	case ECombatState::ECS_Unoccupied:
 		if (bFireButtonPressed)
@@ -736,7 +749,10 @@ void UCombatComponent::MulticastShotgunFire_Implementation(const TArray<FVector_
 
 void UCombatComponent::HandleReload()
 {
-	Character->PlayReloadMontage();
+	if (Character)
+	{
+		Character->PlayReloadMontage();
+	}
 }
 
 int32 UCombatComponent::AmountToReload()
@@ -831,7 +847,9 @@ void UCombatComponent::ServerReload_Implementation()
 		return;
 
 	CombatState = ECombatState::ECS_Reloading;
-	HandleReload();
+
+	if (!Character->IsLocallyControlled()) 
+		HandleReload();
 }
 
 void UCombatComponent::EquipWeapon(ABlasterWeapon* WeaponToEquip)
@@ -857,9 +875,11 @@ void UCombatComponent::EquipWeapon(ABlasterWeapon* WeaponToEquip)
 
 void UCombatComponent::Reload()
 {
-	if (CarriedAmmo > 0 && CombatState == ECombatState::ECS_Unoccupied && EquippedWeapon && !EquippedWeapon->IsFull())
+	if (CarriedAmmo > 0 && CombatState == ECombatState::ECS_Unoccupied && EquippedWeapon && !EquippedWeapon->IsFull() && !bLocallyReloading)
 	{
 		ServerReload();
+		HandleReload();
+		bLocallyReloading = true;
 	}
 }
 
@@ -870,6 +890,7 @@ void UCombatComponent::FinishReloading()
 	if (Character == nullptr)
 		return;
 
+	bLocallyReloading = false;
 	if (Character->HasAuthority())
 	{
 		CombatState = ECombatState::ECS_Unoccupied;
