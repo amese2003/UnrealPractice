@@ -457,10 +457,10 @@ void UCombatComponent::EquipSecondaryWeapon(ABlasterWeapon* WeaponToEquip)
 		SecondaryWeapon->GetWeaponMesh()->MarkRenderStateDirty();
 	}
 
-	if (EquippedWeapon == nullptr) 
+	if (SecondaryWeapon == nullptr)
 		return;
 
-	EquippedWeapon->SetOwner(Character);
+	SecondaryWeapon->SetOwner(Character);
 }
 
 void UCombatComponent::SwapWeapons()
