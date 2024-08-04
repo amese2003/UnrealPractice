@@ -277,7 +277,10 @@ void ABlasterWeapon::Fire(const FVector& HitTarget)
 		}
 	}
 
-	SpendRound();
+	if (HasAuthority())
+	{
+		SpendRound();
+	}
 }
 
 void ABlasterWeapon::Dropped()
