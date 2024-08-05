@@ -256,6 +256,8 @@ private:
 	UPROPERTY(VisibleAnywhere)
 		class ULagCompensationComponent* LagCompensation;
 
+	
+
 public:
 	void SetOverlappingWeapon(ABlasterWeapon* Weapon);
 	bool IsWeaponEquipped();
@@ -284,6 +286,9 @@ public:
 	bool IsLocallyReloading();
 
 public:
+
+	UPROPERTY()
+		TMap<FName, class UBoxComponent*> HitCollisionBoxes;
 
 	UPROPERTY(EditAnywhere)
 		class UBoxComponent* head;
