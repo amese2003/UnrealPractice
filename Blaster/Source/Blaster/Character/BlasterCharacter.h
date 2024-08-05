@@ -253,6 +253,9 @@ private:
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<ABlasterWeapon> DefaultWeaponClass;
 
+	UPROPERTY(VisibleAnywhere)
+		class ULagCompensationComponent* LagCompensation;
+
 public:
 	void SetOverlappingWeapon(ABlasterWeapon* Weapon);
 	bool IsWeaponEquipped();

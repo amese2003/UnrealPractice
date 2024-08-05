@@ -23,6 +23,7 @@
 #include "Blaster/Weapon/WeaponType.h"
 #include "Blaster/BlasterComponents/BuffComponent.h"
 #include "Components/BoxComponent.h"
+#include "Blaster/BlasterComponents/LagCompensationComponent.h"
 
 ABlasterCharacter::ABlasterCharacter()
 {
@@ -66,6 +67,8 @@ ABlasterCharacter::ABlasterCharacter()
 	AttachedGrenade = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Attached Grenade"));
 	AttachedGrenade->SetupAttachment(GetMesh(), FName("GrenadeSocket"));
 	AttachedGrenade->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	LagCompensation = CreateDefaultSubobject<ULagCompensationComponent>(TEXT("LagCompensation"));
 
 
 	head = CreateDefaultSubobject<UBoxComponent>(TEXT("head"));
@@ -500,6 +503,15 @@ void ABlasterCharacter::PostInitializeComponents()
 		);
 
 		Buff->SetInitialJumpVelocity(GetCharacterMovement()->JumpZVelocity);
+	}
+
+	if (LagCompensation)
+	{
+		LagCompensation->Character = this;
+		if (Controller)
+		{
+			LagCompensation->Controller = Cast<ABlasterPlayerController>(Controller);
+		}
 	}
 }
 
