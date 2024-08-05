@@ -231,7 +231,6 @@ void ABlasterWeapon::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ABlasterWeapon, WeaponState);
-	DOREPLIFETIME(ABlasterWeapon, Ammo);
 }
 
 void ABlasterWeapon::OnRep_Owner()
