@@ -35,6 +35,7 @@ public:
 	void HighPingWarning();
 	void StopHighPingWarning();
 	void CheckPing(float DeltaTime);
+	virtual float GetServerTime();
 
 	UFUNCTION(Server, Reliable)
 		void ServerCheckMatchState();
@@ -42,12 +43,14 @@ public:
 	UFUNCTION(Client, Reliable)
 		void ClientJoinMidgame(FName StateOfMatch, float Warmup, float Match, float Cooldown, float StartingTime);
 
+	float SingleTripTime = 0.f;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
 
-	virtual float GetServerTime();
+	
 	virtual void ReceivedPlayer() override;
 
 	void SetHUDTime();
@@ -120,4 +123,6 @@ private:
 
 	UPROPERTY(EditAnywhere)
 		float HighPingThreshold = 50.f;
+
+	
 };

@@ -1,12 +1,13 @@
 #include "HitScanWeapon.h"
 #include "Engine/SkeletalMeshSocket.h"
 #include "Blaster/Character/BlasterCharacter.h"
+#include "Blaster/PlayerController/BlasterPlayerController.h"
 #include "Kismet/GameplayStatics.h"
 #include "particles/ParticleSystemComponent.h"
 #include "Sound/SoundCue.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "WeaponType.h"
-
+#include "Blaster/BlasterComponents/LagCompensationComponent.h"
 #include "DrawDebugHelpers.h"
 #include UE_INLINE_GENERATED_CPP_BY_NAME(HitScanWeapon)
 
@@ -15,7 +16,9 @@ void AHitScanWeapon::Fire(const FVector& HitTarget)
 	Super::Fire(HitTarget);
 
 	APawn* OwnerPawn = Cast<APawn>(GetOwner());
-	if (OwnerPawn == nullptr) return;
+	if (OwnerPawn == nullptr) 
+		return;
+
 	AController* InstigatorController = OwnerPawn->GetController();
 
 	const USkeletalMeshSocket* MuzzleFlashSocket = GetWeaponMesh()->GetSocketByName("MuzzleFlash");
@@ -29,15 +32,33 @@ void AHitScanWeapon::Fire(const FVector& HitTarget)
 
 		ABlasterCharacter* BlasterCharacter = Cast<ABlasterCharacter>(FireHit.GetActor());
 
-		if (BlasterCharacter && HasAuthority() && InstigatorController)
+		if (BlasterCharacter && InstigatorController)
 		{
-			UGameplayStatics::ApplyDamage(
-				BlasterCharacter,
-				Damage,
-				InstigatorController,
-				this,
-				UDamageType::StaticClass()
-			);
+			if (HasAuthority() && !bUseServerSideRewind)
+			{
+				UGameplayStatics::ApplyDamage(
+					BlasterCharacter,
+					Damage,
+					InstigatorController,
+					this,
+					UDamageType::StaticClass()
+				);
+			}
+			if (!HasAuthority() && bUseServerSideRewind)
+			{
+				BlasterOwnerCharacter = BlasterOwnerCharacter == nullptr ? Cast<ABlasterCharacter>(OwnerPawn) : BlasterOwnerCharacter;
+				BlasterOwnerController = BlasterOwnerController == nullptr ? Cast<ABlasterPlayerController>(InstigatorController) : BlasterOwnerController;
+				if (BlasterOwnerController && BlasterOwnerCharacter && BlasterOwnerCharacter->GetLagCompensation())
+				{
+					BlasterOwnerCharacter->GetLagCompensation()->ServerScoreRequest(
+						BlasterCharacter,
+						Start,
+						HitTarget,
+						BlasterOwnerController->GetServerTime() - BlasterOwnerController->SingleTripTime,
+						this
+					);
+				}
+			}
 		}
 
 		if (ImpactParticles)

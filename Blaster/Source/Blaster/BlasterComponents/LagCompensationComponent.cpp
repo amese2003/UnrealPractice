@@ -2,6 +2,8 @@
 #include "Blaster/Character/BlasterCharacter.h"
 #include "Components/BoxComponent.h"
 #include "DrawDebugHelpers.h"
+#include "Blaster/Weapon/BlasterWeapon.h"
+#include "Kismet/GameplayStatics.h"
 #include UE_INLINE_GENERATED_CPP_BY_NAME(LagCompensationComponent)
 
 ULagCompensationComponent::ULagCompensationComponent()
@@ -36,26 +38,7 @@ void ULagCompensationComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if (FrameHistory.Num() <= 1)
-	{
-		FFramePackage ThisFrame;
-		SaveFramePackage(ThisFrame);
-		FrameHistory.AddHead(ThisFrame);
-	}
-	else
-	{
-		float HistoryLength = FrameHistory.GetHead()->GetValue().Time - FrameHistory.GetTail()->GetValue().Time;
-		while (HistoryLength > MaxRecordTime)
-		{
-			FrameHistory.RemoveNode(FrameHistory.GetTail());
-			HistoryLength = FrameHistory.GetHead()->GetValue().Time - FrameHistory.GetTail()->GetValue().Time;
-		}
-		FFramePackage ThisFrame;
-		SaveFramePackage(ThisFrame);
-		FrameHistory.AddHead(ThisFrame);
-
-		ShowFramePackage(ThisFrame, FColor::Red);
-	}
+	SaveFramePackage();
 }
 
 void ULagCompensationComponent::ShowFramePackage(const FFramePackage& Package, const FColor& Color)
@@ -132,6 +115,22 @@ FServerSideRewindResult ULagCompensationComponent::ServerSideRewind(ABlasterChar
 	}
 
 	return ConfirmHit(FrameToCheck, HitCharacter, TraceStart, HitLocation);
+}
+
+void ULagCompensationComponent::ServerScoreRequest_Implementation(ABlasterCharacter* HitCharacter, const FVector_NetQuantize& TraceStart, const FVector_NetQuantize& HitLocation, float HitTime, ABlasterWeapon* DamageCauser)
+{
+	FServerSideRewindResult Confirm = ServerSideRewind(HitCharacter, TraceStart, HitLocation, HitTime);
+
+	if (Character && HitCharacter && DamageCauser && Confirm.bHitConfirmed)
+	{
+		UGameplayStatics::ApplyDamage(
+			HitCharacter,
+			DamageCauser->GetDamage(),
+			Character->Controller,
+			DamageCauser,
+			UDamageType::StaticClass()
+		);
+	}
 }
 
 FFramePackage ULagCompensationComponent::InterpBetweenFrames(const FFramePackage& OlderFrame, const FFramePackage& YoungerFrame, float HitTime)
@@ -280,5 +279,32 @@ void ULagCompensationComponent::EnableCharacterMeshCollision(ABlasterCharacter* 
 	if (HitCharacter && HitCharacter->GetMesh())
 	{
 		HitCharacter->GetMesh()->SetCollisionEnabled(CollisionEnabled);
+	}
+}
+
+void ULagCompensationComponent::SaveFramePackage()
+{
+	if (Character == nullptr || !Character->HasAuthority()) 
+		return;
+
+	if (FrameHistory.Num() <= 1)
+	{
+		FFramePackage ThisFrame;
+		SaveFramePackage(ThisFrame);
+		FrameHistory.AddHead(ThisFrame);
+	}
+	else
+	{
+		float HistoryLength = FrameHistory.GetHead()->GetValue().Time - FrameHistory.GetTail()->GetValue().Time;
+		while (HistoryLength > MaxRecordTime)
+		{
+			FrameHistory.RemoveNode(FrameHistory.GetTail());
+			HistoryLength = FrameHistory.GetHead()->GetValue().Time - FrameHistory.GetTail()->GetValue().Time;
+		}
+		FFramePackage ThisFrame;
+		SaveFramePackage(ThisFrame);
+		FrameHistory.AddHead(ThisFrame);
+
+		ShowFramePackage(ThisFrame, FColor::Red);
 	}
 }

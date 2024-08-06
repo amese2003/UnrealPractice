@@ -132,6 +132,14 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = Crosshairs)
 		class UTexture2D* CrosshairsBottom;
+
+
+	UPROPERTY(EditAnywhere)
+		float Damage = 20.f;
+
+	UPROPERTY(EditAnywhere)
+		bool bUseServerSideRewind = false;
+
 	/**
 	* Automatic fire
 	*/
@@ -171,4 +179,5 @@ public:
 	FORCEINLINE EWeaponType GetWeaponType() const { return WeaponType; }
 	FORCEINLINE int32 GetAmmo() const { return Ammo; }
 	FORCEINLINE int32 GetMagCapacity() const { return MagCapacity; }
+	FORCEINLINE float GetDamage() const { return Damage; }
 };

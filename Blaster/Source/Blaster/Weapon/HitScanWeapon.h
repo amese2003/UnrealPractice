@@ -16,8 +16,6 @@ public:
 	void WeaponTraceHit(const FVector& TraceStart, const FVector& HitTarget, FHitResult& OutHit);
 
 protected:
-	UPROPERTY(EditAnywhere)
-		float Damage = 20.f;
 
 	UPROPERTY(EditAnywhere)
 		class UParticleSystem* ImpactParticles;
