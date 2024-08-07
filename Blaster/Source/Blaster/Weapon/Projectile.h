@@ -17,6 +17,16 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void Destroyed() override;
 
+	UPROPERTY(EditAnywhere)
+		float Damage = 20.f;
+
+	UPROPERTY(EditAnywhere)
+		float InitialSpeed = 15000;
+
+	bool bUseServerSideRewind = false;
+	FVector_NetQuantize TraceStart;
+	FVector_NetQuantize100 InitialVelocity;
+
 protected:
 	virtual void BeginPlay() override;
 	void StartDestroyTimer();
@@ -44,8 +54,7 @@ private:
 
 	
 protected:
-	UPROPERTY(EditAnywhere)
-		float Damage = 20.f;
+	
 
 	UPROPERTY(EditAnywhere)
 		UParticleSystem* ImpactParticles;
@@ -71,10 +80,8 @@ protected:
 	UPROPERTY(EditAnywhere)
 		float DamageOuterRadius = 500.f;
 
-	bool bUseServerSideRewind = false;
-	FVector_NetQuantize TraceStart;
-	FVector_NetQuantize100 InitialVelocity;
+	
+	
 
-	UPROPERTY(EditAnywhere)
-		float InitialSpeed = 15000;
+	
 };
