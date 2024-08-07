@@ -70,4 +70,11 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 		float DamageOuterRadius = 500.f;
+
+	bool bUseServerSideRewind = false;
+	FVector_NetQuantize TraceStart;
+	FVector_NetQuantize100 InitialVelocity;
+
+	UPROPERTY(EditAnywhere)
+		float InitialSpeed = 15000;
 };
