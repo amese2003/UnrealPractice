@@ -137,7 +137,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		float Damage = 20.f;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(Replicated, EditAnywhere)
 		bool bUseServerSideRewind = false;
 
 	/**
@@ -170,6 +170,9 @@ public:
 		bool bUseScatter = false;
 
 	void EnableCustomDepth(bool bEnable);
+
+	UFUNCTION()
+		void OnPingTooHigh(bool bPingTooHigh);
 public:
 	void SetWeaponState(EWeaponState State);
 	FORCEINLINE USphereComponent* GetAreaSphere() const { return AreaSphere; }

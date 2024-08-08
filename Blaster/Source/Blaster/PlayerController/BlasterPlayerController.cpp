@@ -350,18 +350,29 @@ void ABlasterPlayerController::StopHighPingWarning()
 
 void ABlasterPlayerController::CheckPing(float DeltaTime)
 {
+	if (HasAuthority()) 
+		return;
+
 	HighPingRunningTime += DeltaTime;
 	if (HighPingRunningTime > CheckPingFrequency)
 	{
 		if (!PlayerState)
 			PlayerState = GetPlayerState<APlayerState>();
 
+		;
+		UE_LOG(LogTemp, Warning, TEXT("PlayerState->GetPingInMilliseconds() : %f"), PlayerState->GetPingInMilliseconds());
+
 		if (PlayerState)
 		{
-			if (PlayerState->GetPingInMilliseconds() > HighPingThreshold) // ping is compressed; it's actually ping / 4
+			if (PlayerState->GetPingInMilliseconds() > HighPingThreshold)
 			{
 				HighPingWarning();
 				PingAnimationRunningTime = 0.f;
+				ServerReportPingStatus(true);
+			}
+			else
+			{
+				ServerReportPingStatus(false);
 			}
 		}
 		HighPingRunningTime = 0.f;
@@ -435,6 +446,10 @@ float ABlasterPlayerController::GetServerTime()
 	return GetWorld()->GetTimeSeconds() + ClientServerDelta;
 }
 
+void ABlasterPlayerController::BroadcastElim(APlayerState* Attacker, APlayerState* Victim)
+{
+}
+
 void ABlasterPlayerController::ReceivedPlayer()
 {
 	Super::ReceivedPlayer();
@@ -506,6 +521,11 @@ void ABlasterPlayerController::PollInit()
 	}
 }
 
+void ABlasterPlayerController::ServerReportPingStatus_Implementation(bool bHighPing)
+{
+	HighPingDelegate.Broadcast(bHighPing);
+}
+
 void ABlasterPlayerController::ServerRequestServerTime_Implementation(float TimeOfClientRequest)
 {
 	float ServerTimeOfReceipt = GetWorld()->GetTimeSeconds();
@@ -518,6 +538,10 @@ void ABlasterPlayerController::ClientReportServerTime_Implementation(float TimeO
 	SingleTripTime = 0.5f * RoundTripTime;
 	float CurrentServerTime = TimeServerReceivedClientRequest + SingleTripTime;
 	ClientServerDelta = CurrentServerTime - GetWorld()->GetTimeSeconds();
+}
+
+void ABlasterPlayerController::ClientElimAnnouncement_Implementation(APlayerState* Attacker, APlayerState* Victim)
+{
 }
 
 void ABlasterPlayerController::CheckTimeSync(float DeltaTime)
