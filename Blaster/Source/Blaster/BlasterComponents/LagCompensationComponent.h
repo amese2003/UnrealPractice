@@ -112,6 +112,14 @@ public:
 		float HitTime
 	);
 
+	UFUNCTION(Server, Reliable)
+		void ProjectileServerScoreRequest(
+			ABlasterCharacter* HitCharacter,
+			const FVector_NetQuantize& TraceStart,
+			const FVector_NetQuantize100& InitialVelocity,
+			float HitTime
+		);
+
 protected:
 	virtual void BeginPlay() override;
 	void SaveFramePackage(FFramePackage& Package);
