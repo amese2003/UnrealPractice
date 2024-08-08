@@ -263,7 +263,7 @@ void ABlasterPlayerController::HandleCooldown()
 		BlasterHUD->Announcement->AnnouncementText &&
 		BlasterHUD->Announcement->InfoText;
 
-	if (BlasterHUD)
+	if (bHUDValid)
 	{
 		BlasterHUD->CharacterOverlay->RemoveFromParent();
 		if (BlasterHUD->Announcement)
