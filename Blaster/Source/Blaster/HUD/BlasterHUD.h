@@ -45,6 +45,9 @@ private:
 	UPROPERTY(EditAnywhere)
 		float CrosshairSpreadMax = 16.f;
 
+	UPROPERTY()
+		class APlayerController* OwningPlayer;
+
 public:
 
 	UPROPERTY(EditAnywhere, Category = "Player Stats")
@@ -59,7 +62,11 @@ public:
 	UPROPERTY()
 		class UAnnouncement* Announcement;
 
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class UElimAnnouncement> ElimAnnouncementClass;
+
 	void AddAnnouncement();
+	void AddElimAnnouncement(FString Attacker, FString Victim);
 
 public:
 	FORCEINLINE void SetHUDPackage(const FHUDPackage& Package) { HUDPackage = Package; }
