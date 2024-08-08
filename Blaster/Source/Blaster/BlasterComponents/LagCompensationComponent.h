@@ -102,27 +102,48 @@ public:
 			float HitTime
 		);
 
+	/**
+	* Projectile
+	*/
+	FServerSideRewindResult ProjectileServerSideRewind(
+		ABlasterCharacter* HitCharacter,
+		const FVector_NetQuantize& TraceStart,
+		const FVector_NetQuantize100& InitialVelocity,
+		float HitTime
+	);
+
 protected:
 	virtual void BeginPlay() override;
 	void SaveFramePackage(FFramePackage& Package);
 	FFramePackage InterpBetweenFrames(const FFramePackage& OlderFrame, const FFramePackage& YoungerFrame, float HitTime);
-	FServerSideRewindResult ConfirmHit(
-		const FFramePackage& Package,
-		ABlasterCharacter* HitCharacter,
-		const FVector_NetQuantize& TraceStart,
-		const FVector_NetQuantize& HitLocation);
+	
 	void CacheBoxPositions(ABlasterCharacter* HitCharacter, FFramePackage& OutFramePackage);
 	void MoveBoxes(ABlasterCharacter* HitCharacter, const FFramePackage& Package);
 	void ResetHitBoxes(ABlasterCharacter* HitCharacter, const FFramePackage& Package);
 	void EnableCharacterMeshCollision(ABlasterCharacter* HitCharacter, ECollisionEnabled::Type CollisionEnabled);
 	void SaveFramePackage();
 	FFramePackage GetFrameToCheck(ABlasterCharacter* HitCharacter, float HitTime);
+	
+	FServerSideRewindResult ConfirmHit(
+		const FFramePackage& Package,
+		ABlasterCharacter* HitCharacter,
+		const FVector_NetQuantize& TraceStart,
+		const FVector_NetQuantize& HitLocation);
 
 	FShotgunServerSideRewindResult ShotgunConfirmHit(
 		const TArray<FFramePackage>& FramePackages,
 		const FVector_NetQuantize& TraceStart,
 		const TArray<FVector_NetQuantize>& HitLocations
 	);
+
+	FServerSideRewindResult ProjectileConfirmHit(
+		const FFramePackage& Package,
+		ABlasterCharacter* HitCharacter,
+		const FVector_NetQuantize& TraceStart,
+		const FVector_NetQuantize100& InitialVelocity,
+		float HitTime
+	);
+
 private:
 
 	UPROPERTY()
