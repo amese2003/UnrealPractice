@@ -42,6 +42,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void LaunchGrenade();
 
+	UFUNCTION(BlueprintCallable)
+		void FinishSwap();
+
+	UFUNCTION(BlueprintCallable)
+		void FinishSwapAttachWeapons();
+
 	void PickupAmmo(EWeaponType WeaponType, int32 AmmoAmount);
 
 protected:

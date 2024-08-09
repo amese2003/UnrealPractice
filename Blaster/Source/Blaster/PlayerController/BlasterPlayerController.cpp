@@ -568,6 +568,7 @@ void ABlasterPlayerController::ClientElimAnnouncement_Implementation(APlayerStat
 			BlasterHUD->AddElimAnnouncement(Attacker->GetPlayerName(), "themselves");
 			return;
 		}
+
 		BlasterHUD->AddElimAnnouncement(Attacker->GetPlayerName(), Victim->GetPlayerName());
 	}
 }
