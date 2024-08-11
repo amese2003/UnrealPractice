@@ -17,6 +17,9 @@
 #include "Blaster/GameState/BlasterGameState.h"
 #include "Components/Image.h"
 #include "GameFramework/PlayerState.h"
+#include "Blaster/HUD/ReturnToMainMenu.h"
+#include "EnhancedInputComponent.h"
+#include "EnhancedInputSubsystems.h"
 
 void ABlasterPlayerController::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
@@ -451,6 +454,30 @@ void ABlasterPlayerController::BroadcastElim(APlayerState* Attacker, APlayerStat
 	ClientElimAnnouncement(Attacker, Victim);
 }
 
+void ABlasterPlayerController::ShowReturnToMainMenu(const FInputActionValue& Value)
+{
+	if (ReturnToMainMenuWidget == nullptr) 
+		return;
+
+	if (ReturnToMainMenu == nullptr)
+	{
+		ReturnToMainMenu = CreateWidget<UReturnToMainMenu>(this, ReturnToMainMenuWidget);
+	}
+
+	if (ReturnToMainMenu)
+	{
+		bReturnToMainMenuOpen = !bReturnToMainMenuOpen;
+		if (bReturnToMainMenuOpen)
+		{
+			ReturnToMainMenu->MenuSetup();
+		}
+		else
+		{
+			ReturnToMainMenu->MenuTearDown();
+		}
+	}
+}
+
 void ABlasterPlayerController::ReceivedPlayer()
 {
 	Super::ReceivedPlayer();
@@ -520,6 +547,26 @@ void ABlasterPlayerController::PollInit()
 			}
 		}
 	}
+}
+
+void ABlasterPlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+
+	if (InputComponent == nullptr) 
+		return;
+
+	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent);
+
+	if (EnhancedInputComponent == nullptr)
+		return;
+
+	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+	{
+		Subsystem->AddMappingContext(UIMappingContext, 1);
+	}
+
+	EnhancedInputComponent->BindAction(EscapeAction, ETriggerEvent::Started, this, &ThisClass::ShowReturnToMainMenu);
 }
 
 void ABlasterPlayerController::ServerReportPingStatus_Implementation(bool bHighPing)

@@ -8,6 +8,10 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FHighPingDelegate, bool, bPingTooHigh);
 
+class UInputMappingContext;
+class UInputAction;
+struct FInputActionValue;
+
 /**
  * 
  */
@@ -40,6 +44,8 @@ public:
 	virtual float GetServerTime();
 	void BroadcastElim(APlayerState* Attacker, APlayerState* Victim);
 
+	void ShowReturnToMainMenu(const FInputActionValue& Value);
+
 	UFUNCTION(Server, Reliable)
 		void ServerCheckMatchState();
 
@@ -59,6 +65,7 @@ protected:
 
 	void SetHUDTime();
 	void PollInit();
+	virtual void SetupInputComponent() override;
 
 	UFUNCTION(Server, Reliable)
 		void ServerReportPingStatus(bool bHighPing);
@@ -106,6 +113,13 @@ private:
 	UPROPERTY()
 		class UCharacterOverlay* CharacterOverlay;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		class UInputMappingContext* UIMappingContext;
+
+	/** Jump Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		UInputAction* EscapeAction;
+
 	float HUDHealth = 0;
 	float HUDMaxHealth = 0;
 	float HUDScore = 0;
@@ -137,5 +151,13 @@ private:
 	UPROPERTY(EditAnywhere)
 		float HighPingThreshold = 50.f;
 
+
+	UPROPERTY(EditAnywhere, Category = HUD)
+		TSubclassOf<class UUserWidget> ReturnToMainMenuWidget;
+
+	UPROPERTY()
+		class UReturnToMainMenu* ReturnToMainMenu;
+
+	bool bReturnToMainMenuOpen = false;
 	
 };
