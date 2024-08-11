@@ -14,6 +14,8 @@ class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLeftGame);
+
 UCLASS()
 class BLASTER_API ABlasterCharacter : public ACharacter, public IInteractWithCrosshairsInterface
 {
@@ -43,13 +45,13 @@ public:
 	void UpdateHUDAmmo();
 
 	void SpawnDefaultWeapon();
-	void Elim();
+	void Elim(bool bPlayerLeftGame);
 
 	void PollInit();
 	void RotateInPlace(float DeltaTime);
 
 	UFUNCTION(NetMulticast, Reliable)
-		void MulticastElim();
+		void MulticastElim(bool bPlayerLeftGame);
 
 	virtual void Destroyed() override;
 
@@ -61,6 +63,11 @@ public:
 
 	void DropOrDestroyWeapon(ABlasterWeapon* Weapon);
 	void DropOrDestroyWeapons();
+
+	UFUNCTION(Server, Reliable)
+		void ServerLeaveGame();
+
+	FOnLeftGame OnLeftGame;
 
 protected:
 	virtual void BeginPlay() override;
@@ -259,6 +266,8 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Combat)
 		UAnimMontage* SwapMontage;
+
+	bool bLeftGame = false;
 	
 public:
 	void SetOverlappingWeapon(ABlasterWeapon* Weapon);
