@@ -70,6 +70,9 @@ protected:
 	UFUNCTION(Server, Reliable)
 		void ServerReportPingStatus(bool bHighPing);
 
+	UFUNCTION(Client, Reliable)
+		void ClientElimAnnouncement(APlayerState* Attacker, APlayerState* Victim);
+
 private:
 	UPROPERTY()
 	class ABlasterHUD* BlasterHUD;
@@ -89,11 +92,6 @@ private:
 	UFUNCTION(Client, Reliable)
 		void ClientReportServerTime(float TimeOfClientRequest, float TimeServerReceivedClientRequest);
 
-
-
-
-	UFUNCTION(Client, Reliable)
-		void ClientElimAnnouncement(APlayerState* Attacker, APlayerState* Victim);
 
 	float ClientServerDelta = 0.f;
 

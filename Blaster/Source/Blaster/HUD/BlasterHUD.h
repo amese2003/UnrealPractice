@@ -33,6 +33,8 @@ public:
 	virtual void DrawHUD() override;
 	void DrawCrosshair(UTexture2D* Texture, FVector2D ViewportCenter, FVector2D Spread, FLinearColor CrosshairColor);
 	void AddCharacterOverlay();
+	void AddAnnouncement();
+	void AddElimAnnouncement(FString Attacker, FString Victim);
 
 protected:
 	virtual void BeginPlay() override;
@@ -65,8 +67,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<class UElimAnnouncement> ElimAnnouncementClass;
 
-	void AddAnnouncement();
-	void AddElimAnnouncement(FString Attacker, FString Victim);
+	
 
 public:
 	FORCEINLINE void SetHUDPackage(const FHUDPackage& Package) { HUDPackage = Package; }
