@@ -67,6 +67,14 @@ public:
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<class UElimAnnouncement> ElimAnnouncementClass;
 
+	UPROPERTY(EditAnywhere)
+		float ElimAnnouncementTime = 2.5f;
+
+	UFUNCTION()
+		void ElimAnnouncementTimerFinished(UElimAnnouncement* MsgToRemove);
+
+	UPROPERTY()
+		TArray<UElimAnnouncement*> ElimMessages;
 	
 
 public:
