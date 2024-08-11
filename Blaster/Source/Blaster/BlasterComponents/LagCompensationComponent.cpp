@@ -411,14 +411,14 @@ FShotgunServerSideRewindResult ULagCompensationComponent::ShotgunConfirmHit(cons
 			ABlasterCharacter* BlasterCharacter = Cast<ABlasterCharacter>(ConfirmHitResult.GetActor());
 			if (BlasterCharacter)
 			{
-				if (ConfirmHitResult.Component.IsValid())
+				/*if (ConfirmHitResult.Component.IsValid())
 				{
 					UBoxComponent* Box = Cast<UBoxComponent>(ConfirmHitResult.Component);
 					if (Box)
 					{
 						DrawDebugBox(GetWorld(), Box->GetComponentLocation(), Box->GetScaledBoxExtent(), FQuat(Box->GetComponentRotation()), FColor::Red, false, 8.f);
 					}
-				}
+				}*/
 
 				if (ShotgunResult.HeadShots.Contains(BlasterCharacter))
 				{
@@ -464,14 +464,14 @@ FShotgunServerSideRewindResult ULagCompensationComponent::ShotgunConfirmHit(cons
 
 			if (BlasterCharacter)
 			{
-				if (ConfirmHitResult.Component.IsValid())
+				/*if (ConfirmHitResult.Component.IsValid())
 				{
 					UBoxComponent* Box = Cast<UBoxComponent>(ConfirmHitResult.Component);
 					if (Box)
 					{
 						DrawDebugBox(GetWorld(), Box->GetComponentLocation(), Box->GetScaledBoxExtent(), FQuat(Box->GetComponentRotation()), FColor::Blue, false, 8.f);
 					}
-				}
+				}*/
 
 				if (ShotgunResult.BodyShots.Contains(BlasterCharacter))
 				{
@@ -545,14 +545,14 @@ FServerSideRewindResult ULagCompensationComponent::ProjectileConfirmHit(const FF
 
 	if (PathResult.HitResult.bBlockingHit)
 	{
-		if (PathResult.HitResult.Component.IsValid())
+		/*if (PathResult.HitResult.Component.IsValid())
 		{
 			UBoxComponent* Box = Cast<UBoxComponent>(PathResult.HitResult.Component);
 			if (Box)
 			{
 				DrawDebugBox(GetWorld(), Box->GetComponentLocation(), Box->GetScaledBoxExtent(), FQuat(Box->GetComponentRotation()), FColor::Red, false, 8.f);
 			}
-		}
+		}*/
 
 		ResetHitBoxes(HitCharacter, CurrentFrame);
 		EnableCharacterMeshCollision(HitCharacter, ECollisionEnabled::QueryAndPhysics);
@@ -573,7 +573,7 @@ FServerSideRewindResult ULagCompensationComponent::ProjectileConfirmHit(const FF
 
 		if (PathResult.HitResult.bBlockingHit)
 		{
-			if (PathResult.HitResult.Component.IsValid())
+			/*if (PathResult.HitResult.Component.IsValid())
 			{
 				UBoxComponent* Box = Cast<UBoxComponent>(PathResult.HitResult.Component);
 
@@ -581,7 +581,7 @@ FServerSideRewindResult ULagCompensationComponent::ProjectileConfirmHit(const FF
 				{
 					DrawDebugBox(GetWorld(), Box->GetComponentLocation(), Box->GetScaledBoxExtent(), FQuat(Box->GetComponentRotation()), FColor::Blue, false, 8.f);
 				}
-			}
+			}*/
 
 			ResetHitBoxes(HitCharacter, CurrentFrame);
 			EnableCharacterMeshCollision(HitCharacter, ECollisionEnabled::QueryAndPhysics);

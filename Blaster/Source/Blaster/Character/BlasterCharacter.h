@@ -69,6 +69,12 @@ public:
 
 	FOnLeftGame OnLeftGame;
 
+	UFUNCTION(NetMulticast, Reliable)
+		void MulticastGainedTheLead();
+
+	UFUNCTION(NetMulticast, Reliable)
+		void MulticastLostTheLead();
+
 protected:
 	virtual void BeginPlay() override;
 	/** Called for movement input */
@@ -268,6 +274,12 @@ private:
 		UAnimMontage* SwapMontage;
 
 	bool bLeftGame = false;
+
+	UPROPERTY(EditAnywhere)
+		class UNiagaraSystem* CrownSystem;
+
+	UPROPERTY()
+		class UNiagaraComponent* CrownComponent;
 	
 public:
 	void SetOverlappingWeapon(ABlasterWeapon* Weapon);

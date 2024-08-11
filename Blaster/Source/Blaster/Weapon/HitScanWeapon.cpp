@@ -8,7 +8,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "WeaponType.h"
 #include "Blaster/BlasterComponents/LagCompensationComponent.h"
-#include "DrawDebugHelpers.h"
+//#include "DrawDebugHelpers.h"
 #include UE_INLINE_GENERATED_CPP_BY_NAME(HitScanWeapon)
 
 void AHitScanWeapon::Fire(const FVector& HitTarget)
@@ -122,7 +122,7 @@ void AHitScanWeapon::WeaponTraceHit(const FVector& TraceStart, const FVector& Hi
 			BeamEnd = OutHit.ImpactPoint;
 		}
 
-		DrawDebugSphere(GetWorld(), BeamEnd, 16.f, 12, FColor::Orange, true);
+		// DrawDebugSphere(GetWorld(), BeamEnd, 16.f, 12, FColor::Orange, true);
 
 		if (BeamParticles)
 		{
