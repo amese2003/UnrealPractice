@@ -21,6 +21,9 @@ public:
 		float Damage = 20.f;
 
 	UPROPERTY(EditAnywhere)
+		float HeadShotDamage = 40.f;
+
+	UPROPERTY(EditAnywhere)
 		float InitialSpeed = 15000;
 
 	bool bUseServerSideRewind = false;
@@ -81,7 +84,5 @@ protected:
 		float DamageOuterRadius = 500.f;
 
 	
-	
-
 	
 };
