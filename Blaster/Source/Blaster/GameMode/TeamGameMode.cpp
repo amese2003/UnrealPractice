@@ -6,6 +6,11 @@
 #include UE_INLINE_GENERATED_CPP_BY_NAME(TeamGameMode)
 
 
+ATeamGameMode::ATeamGameMode()
+{
+	bTeamMatch = true;
+}
+
 void ATeamGameMode::PostLogin(APlayerController* NewPlayer)
 {
 	Super::PostLogin(NewPlayer);

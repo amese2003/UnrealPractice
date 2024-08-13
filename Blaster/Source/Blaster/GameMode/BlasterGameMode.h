@@ -36,6 +36,8 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 		bool bAllowTeamKill = false;
 
+	bool bTeamMatch = false;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void OnMatchStateSet() override;
