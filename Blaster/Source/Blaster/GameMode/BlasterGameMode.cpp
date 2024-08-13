@@ -173,3 +173,8 @@ void ABlasterGameMode::OnMatchStateSet()
 		}
 	}
 }
+
+float ABlasterGameMode::CalculateDamage(AController* Attacker, AController* Victim, float BaseDamage)
+{
+	return BaseDamage;
+}

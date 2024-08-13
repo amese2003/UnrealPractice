@@ -303,6 +303,9 @@ private:
 
 	UPROPERTY()
 		class UNiagaraComponent* CrownComponent;
+
+	UPROPERTY()
+		class ABlasterGameMode* BlasterGameMode;
 	
 public:
 	void SetOverlappingWeapon(ABlasterWeapon* Weapon);
