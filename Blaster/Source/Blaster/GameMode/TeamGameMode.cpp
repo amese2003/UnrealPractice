@@ -5,18 +5,20 @@
 #include "TeamGameMode.h"
 #include UE_INLINE_GENERATED_CPP_BY_NAME(TeamGameMode)
 
+
 void ATeamGameMode::PostLogin(APlayerController* NewPlayer)
 {
 	Super::PostLogin(NewPlayer);
 
 	ABlasterGameState* BGameState = Cast<ABlasterGameState>(UGameplayStatics::GetGameState(this));
 
+
 	if (BGameState)
 	{
 		ABlasterPlayerState* BPState = NewPlayer->GetPlayerState<ABlasterPlayerState>();
-
 		if (BPState && BPState->GetTeam() == ETeam::ET_NoTeam)
 		{
+
 			if (BGameState->BlueTeam.Num() >= BGameState->RedTeam.Num())
 			{
 				BGameState->RedTeam.AddUnique(BPState);
@@ -54,13 +56,11 @@ void ATeamGameMode::HandleMatchHasStarted()
 	Super::HandleMatchHasStarted();
 
 	ABlasterGameState* BGameState = Cast<ABlasterGameState>(UGameplayStatics::GetGameState(this));
-
 	if (BGameState)
 	{
 		for (auto PState : BGameState->PlayerArray)
 		{
 			ABlasterPlayerState* BPState = Cast<ABlasterPlayerState>(PState.Get());
-
 			if (BPState && BPState->GetTeam() == ETeam::ET_NoTeam)
 			{
 				if (BGameState->BlueTeam.Num() >= BGameState->RedTeam.Num())
