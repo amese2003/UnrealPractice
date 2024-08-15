@@ -168,6 +168,7 @@ protected:
 	void AttachActorToRightHand(AActor* ActorToAttach);
 	void AttachActorToLeftHand(AActor* ActorToAttach);
 	void AttachActorToBackpack(AActor* ActorToAttach);
+	void AttachFlagToLeftHand(ABlasterWeapon* Flag);
 	void UpdateCarriedAmmo();
 	void PlayEquipWeaponSound(ABlasterWeapon* WeaponToEquip);
 	void ReloadEmptyWeapon();
@@ -203,10 +204,18 @@ private:
 	UFUNCTION()
 		void OnRep_Aiming();
 
+	UPROPERTY(ReplicatedUsing = OnRep_HoldingTheFlag)
+		bool bHoldingTheFlag = false;
+
+	UFUNCTION()
+		void OnRep_HoldingTheFlag();
+
 	UPROPERTY(EditAnywhere)
 	float BaseWalkSpeed;
 	UPROPERTY(EditAnywhere)
 	float AimWalkSpeed;
+
+
 		
 	bool bFireButtonPressed = false;
 
