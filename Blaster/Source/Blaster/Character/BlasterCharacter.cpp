@@ -1158,3 +1158,11 @@ void ABlasterCharacter::OnRep_OverlappingWeapon(ABlasterWeapon* LastWeapon)
 		LastWeapon->ShowPickupWidget(false);
 	}
 }
+
+bool ABlasterCharacter::IsHoldingTheFlag() const
+{
+	if (Combat == nullptr) 
+		return false;
+
+	return Combat->bHoldingTheFlag;
+}
