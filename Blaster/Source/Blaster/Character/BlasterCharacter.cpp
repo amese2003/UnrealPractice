@@ -756,9 +756,13 @@ void ABlasterCharacter::EquipButtonPressed(const FInputActionValue& Value)
 
 	if (Combat)
 	{
-		ServerEquipButtonPressed();
+		if (Combat->bHoldingTheFlag)
+			return;
+			
 
-		if (Combat->CombatState == ECombatState::ECS_Unoccupied) ServerEquipButtonPressed();
+		if (Combat->CombatState == ECombatState::ECS_Unoccupied) 
+			ServerEquipButtonPressed();
+
 		bool bSwap = Combat->ShouldSwapWeapons() &&
 			!HasAuthority() &&
 			Combat->CombatState == ECombatState::ECS_Unoccupied &&
@@ -775,7 +779,12 @@ void ABlasterCharacter::EquipButtonPressed(const FInputActionValue& Value)
 
 void ABlasterCharacter::CrouchButtonPressed(const FInputActionValue& Value)
 {
+	if (Combat->bHoldingTheFlag)
+		return;
+
 	if (bDisableGameplay) return;
+
+
 
 	if (bIsCrouched)
 	{
@@ -789,6 +798,9 @@ void ABlasterCharacter::CrouchButtonPressed(const FInputActionValue& Value)
 
 void ABlasterCharacter::AimButtonPressed(const FInputActionValue& Value)
 {
+	if (Combat->bHoldingTheFlag)
+		return;
+
 	if (bDisableGameplay) return;
 
 	if (Combat)
@@ -799,6 +811,9 @@ void ABlasterCharacter::AimButtonPressed(const FInputActionValue& Value)
 
 void ABlasterCharacter::AimButtonReleased(const FInputActionValue& Value)
 {
+	if (Combat->bHoldingTheFlag)
+		return;
+
 	if (bDisableGameplay) return;
 
 	if (Combat)
@@ -809,6 +824,9 @@ void ABlasterCharacter::AimButtonReleased(const FInputActionValue& Value)
 
 void ABlasterCharacter::ReloadButtonPressed(const FInputActionValue& Value)
 {
+	if (Combat->bHoldingTheFlag)
+		return;
+
 	if (bDisableGameplay) return;
 
 	if (Combat)
@@ -819,6 +837,9 @@ void ABlasterCharacter::ReloadButtonPressed(const FInputActionValue& Value)
 
 void ABlasterCharacter::ThrowButtonPressed(const FInputActionValue& Value)
 {
+	if (Combat->bHoldingTheFlag)
+		return;
+
 	if (Combat)
 	{
 		Combat->ThrowGrenade();
@@ -918,6 +939,12 @@ void ABlasterCharacter::SimProxiesTurn()
 
 void ABlasterCharacter::Jump()
 {
+	if (Combat && Combat->bHoldingTheFlag)
+		return;
+
+	if (bDisableGameplay)
+		return;
+
 	if (bIsCrouched)
 	{
 		UnCrouch();
