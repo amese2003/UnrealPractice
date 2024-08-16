@@ -78,6 +78,9 @@ public:
 
 	void SetTeamColor(ETeam Team);
 
+	void SetSpawnPoint();
+	void OnPlayerStateInitialized();
+
 protected:
 	virtual void BeginPlay() override;
 	/** Called for movement input */
