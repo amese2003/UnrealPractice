@@ -254,5 +254,4 @@ public:
 	bool ShouldSwapWeapons();
 
 	bool bLocallyReloading = false;
-	bool bHoldingTheFlag = false;
 };

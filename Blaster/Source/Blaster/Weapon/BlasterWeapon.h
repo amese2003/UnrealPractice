@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "WeaponType.h"
+#include "Blaster/BlasterTypes/Team.h"
 #include "BlasterWeapon.generated.h"
 
 UENUM(BlueprintType)
@@ -81,6 +82,8 @@ private:
 
 
 
+
+
 	UPROPERTY(VisibleAnywhere, Category = "Weapon Properties")
 		class UWidgetComponent* PickupWidget;
 
@@ -113,7 +116,8 @@ private:
 	UPROPERTY(EditAnywhere)
 	EWeaponType WeaponType;
 	
-	
+	UPROPERTY(EditAnywhere)
+		ETeam Team;
 
 	int32 Sequence = 0;
 
