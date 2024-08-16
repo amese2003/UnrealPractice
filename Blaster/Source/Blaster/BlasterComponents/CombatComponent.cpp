@@ -903,9 +903,10 @@ void UCombatComponent::EquipWeapon(ABlasterWeapon* WeaponToEquip)
 	{
 		Character->Crouch();
 		bHoldingTheFlag = true;
-		AttachFlagToLeftHand(WeaponToEquip);
 		WeaponToEquip->SetWeaponState(EWeaponState::EWS_Equipped);
+		AttachFlagToLeftHand(WeaponToEquip);
 		WeaponToEquip->SetOwner(Character);
+		TheFlag = WeaponToEquip;
 	}
 	else
 	{

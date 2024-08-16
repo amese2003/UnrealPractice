@@ -186,6 +186,9 @@ private:
 
 	UPROPERTY()
 	class ABlasterHUD* HUD;
+
+	UPROPERTY()
+		ABlasterWeapon* TheFlag;
 	
 
 	

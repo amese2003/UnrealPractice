@@ -210,9 +210,15 @@ void ABlasterCharacter::DropOrDestroyWeapons()
 		{
 			DropOrDestroyWeapon(Combat->EquippedWeapon);
 		}
+
 		if (Combat->SecondaryWeapon)
 		{
 			DropOrDestroyWeapon(Combat->SecondaryWeapon);
+		}
+
+		if (Combat->TheFlag)
+		{
+			Combat->TheFlag->Dropped();
 		}
 	}
 }
@@ -779,7 +785,7 @@ void ABlasterCharacter::EquipButtonPressed(const FInputActionValue& Value)
 
 void ABlasterCharacter::CrouchButtonPressed(const FInputActionValue& Value)
 {
-	if (Combat->bHoldingTheFlag)
+	if (Combat && Combat->bHoldingTheFlag)
 		return;
 
 	if (bDisableGameplay) return;
@@ -798,50 +804,56 @@ void ABlasterCharacter::CrouchButtonPressed(const FInputActionValue& Value)
 
 void ABlasterCharacter::AimButtonPressed(const FInputActionValue& Value)
 {
-	if (Combat->bHoldingTheFlag)
-		return;
+	
 
 	if (bDisableGameplay) return;
 
 	if (Combat)
 	{
+		if (Combat->bHoldingTheFlag)
+			return;
+
 		Combat->SetAiming(true);
 	}
 }
 
 void ABlasterCharacter::AimButtonReleased(const FInputActionValue& Value)
 {
-	if (Combat->bHoldingTheFlag)
-		return;
+	
 
 	if (bDisableGameplay) return;
 
 	if (Combat)
 	{
+		if (Combat->bHoldingTheFlag)
+			return;
+
 		Combat->SetAiming(false);
 	}
 }
 
 void ABlasterCharacter::ReloadButtonPressed(const FInputActionValue& Value)
 {
-	if (Combat->bHoldingTheFlag)
-		return;
+	
 
 	if (bDisableGameplay) return;
 
 	if (Combat)
 	{
+		if (Combat->bHoldingTheFlag)
+			return;
+
 		Combat->Reload();
 	}
 }
 
 void ABlasterCharacter::ThrowButtonPressed(const FInputActionValue& Value)
 {
-	if (Combat->bHoldingTheFlag)
-		return;
-
 	if (Combat)
 	{
+		if (Combat->bHoldingTheFlag)
+			return;
+
 		Combat->ThrowGrenade();
 	}
 }
