@@ -467,7 +467,6 @@ void ABlasterCharacter::Elim(bool bPlayerLeftGame)
 
 void ABlasterCharacter::PollInit()
 {
-
 	if (BlasterPlayerState == nullptr)
 	{
 		BlasterPlayerState = GetPlayerState<ABlasterPlayerState>();
@@ -495,6 +494,12 @@ void ABlasterCharacter::RotateInPlace(float DeltaTime)
 		TurningInPlace = ETurningInPlace::ETIP_NotTurning;
 		return;
 	}
+
+	if (Combat && Combat->EquippedWeapon) 
+		GetCharacterMovement()->bOrientRotationToMovement = false;
+
+	if (Combat && Combat->EquippedWeapon) 
+		bUseControllerRotationYaw = true;
 
 	if (bDisableGameplay)
 	{
@@ -962,7 +967,7 @@ void ABlasterCharacter::SimProxiesTurn()
 	ProxyRotation = GetActorRotation();
 	ProxyYaw = UKismetMathLibrary::NormalizedDeltaRotator(ProxyRotation, ProxyRotationLastFrame).Yaw;
 
-	UE_LOG(LogTemp, Warning, TEXT("ProxyYaw: %f"), ProxyYaw);
+	//UE_LOG(LogTemp, Warning, TEXT("ProxyYaw: %f"), ProxyYaw);
 
 	if (FMath::Abs(ProxyYaw) > TurnThreshold)
 	{
@@ -1257,4 +1262,12 @@ ETeam ABlasterCharacter::GetTeam()
 		return ETeam::ET_NoTeam;
 
 	return BlasterPlayerState->GetTeam();
+}
+
+void ABlasterCharacter::SetHoldingTheFlag(bool bHolding)
+{
+	if (Combat == nullptr) 
+		return;
+
+	Combat->bHoldingTheFlag = bHolding;
 }

@@ -865,6 +865,13 @@ bool UCombatComponent::ServerFire_Validate(const FVector_NetQuantize& TraceHitTa
 	if (EquippedWeapon)
 	{
 		bool bNearlyEqual = FMath::IsNearlyEqual(EquippedWeapon->FireDelay, FireDelay, 0.001f);
+
+		
+		if (bNearlyEqual == true)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Nearly Equal True, EquippedWeapon Delay : %f, FireDelay : %f"), EquippedWeapon->FireDelay, FireDelay);
+		}
+
 		return bNearlyEqual;
 	}
 
@@ -1002,7 +1009,12 @@ void UCombatComponent::FinishSwap()
 
 void UCombatComponent::FinishSwapAttachWeapons()
 {
-	ABlasterWeapon *TempWeapon = EquippedWeapon;
+	PlayEquipWeaponSound(SecondaryWeapon);
+
+	if (Character == nullptr || !Character->HasAuthority()) 
+		return;
+
+	ABlasterWeapon* TempWeapon = EquippedWeapon;
 	EquippedWeapon = SecondaryWeapon;
 	SecondaryWeapon = TempWeapon;
 
@@ -1010,7 +1022,6 @@ void UCombatComponent::FinishSwapAttachWeapons()
 	AttachActorToRightHand(EquippedWeapon);
 	EquippedWeapon->SetHUDAmmo();
 	UpdateCarriedAmmo();
-	PlayEquipWeaponSound(EquippedWeapon);
 
 	SecondaryWeapon->SetWeaponState(EWeaponState::EWS_EquippedSecondary);
 	AttachActorToBackpack(SecondaryWeapon);
